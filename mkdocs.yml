@@ -1,3 +1,7 @@
 site_name: Blog
 theme:
   name: material
+nav:
+  - Home: index.md
+  - "Competetive Programming":
+      - Resources: cp/resources.md
