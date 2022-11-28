@@ -19,5 +19,3 @@ fill(v.begin(), v.end(), 1);
 ```
 
 Here `v(10)` <- 10 is the length.
-
-
