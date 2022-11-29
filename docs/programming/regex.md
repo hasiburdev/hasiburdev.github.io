@@ -3,12 +3,12 @@
 Regular expression is used for pattern matching or string matching.
 
 ```regex
-[abc]    // a,b or c
-[^abc]   // any character except a, b or c
-[a-z]    // a to z
-[A-Z]    // A to Z 
-[a-zA-Z] // a to z and A-Z 
-[0-9]    // 0 to 9
+[abc]      // a,b or c
+[^abc]     // any character except a, b or c
+[a-z]      // a to z
+[A-Z]      // A to Z 
+[a-zA-Z]   // a to z and A-Z 
+[0-9]      // 0 to 9
 ```
 
 ### Quantifiers
@@ -36,3 +36,5 @@ Tells the computer about repetition in regular expression.
 **Escape character (\\)**
 
 Escape character indicates the following character to be considered as a search character. (+, -, ?, *)
+
+
