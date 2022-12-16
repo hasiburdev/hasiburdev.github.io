@@ -1,7 +1,5 @@
 # Prime Numbers
 
-
-
 ## Primality Test
 
 **O(n) Complexity**
@@ -15,8 +13,6 @@ bool isPrime(int n) {
   return true;
 }
 ```
-
-
 
 ## Prime Factorization
 
@@ -51,10 +47,7 @@ void primeFact(int n) {
     len++;
   }
 }
-
 ```
-
-
 
 ## Prime Generator
 
@@ -76,5 +69,3 @@ void sieveOfEratosthenes(int n) {
   }
 }
 ```
-
-
