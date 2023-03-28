@@ -3,8 +3,8 @@ import Text from "./base/text";
 
 const Skills = () => {
   return (
-    <div className="bg-offwhite">
-      <div className="container">
+    <div className="bg-offwhite py-32">
+      <div className="container ">
         <div className="text-center">
           <Text text="Skills" size={"large"} />
           <Heading text="Why Choose Me" />

@@ -3,7 +3,7 @@ import Text from "./base/text";
 
 const MyWorks = () => {
   return (
-    <div>
+    <div className="container my-32">
       <div className="text-center">
         <Text text="Who am I" />
         <Heading text="What I Do" />

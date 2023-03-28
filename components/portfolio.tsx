@@ -3,7 +3,7 @@ import Text from "./base/text";
 
 const Portfolio = () => {
   return (
-    <div className="container">
+    <div className="container my-32">
       <div className="text-center">
         <Text text="Portfolio" size={"large"} />
         <Heading text="Check My Wonderful Work" />
