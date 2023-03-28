@@ -14,6 +14,7 @@ const textClasses = cva(["text-tertiary"], {
       normal: ["font-normal"],
       bold: ["font-bold"],
       medium: ["font-medium"],
+      semibold: ["font-semibold"],
     },
   },
   defaultVariants: {
@@ -28,8 +29,16 @@ interface TextProps
   VariantProps<typeof textClasses> {
   text: string;
 }
-const Text: React.FC<TextProps> = ({ className, text, size, font }) => {
-  return <p className={textClasses({ size, font, className })}>{text}</p>;
+const Text: React.FC<TextProps> = ({
+  className,
+  text,
+  size,
+  font,
+  fontWeight,
+}) => {
+  return (
+    <p className={textClasses({ size, font, fontWeight, className })}>{text}</p>
+  );
 };
 
 export default Text;

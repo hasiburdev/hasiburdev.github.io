@@ -18,6 +18,7 @@ module.exports = {
         secondary: "#313131",
         tertiary: "#626262",
         offwhite: "#f3f3f3",
+        cardborder: "#dddddd",
       },
       fontFamily: {
         open: ["var(--open-sans)", "sans-serif"],
