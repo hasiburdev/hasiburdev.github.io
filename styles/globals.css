@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: "Open Sans", sans-serif;
+  }
+  .container {
+    @apply max-w-container mx-auto;
+  }
+}
