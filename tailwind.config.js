@@ -18,6 +18,13 @@ module.exports = {
         primary: "#863e96",
         primaryDark: "#58e6d9",
       },
+      animation: {
+        "spin-slow": "spin 8s linear infinite",
+      },
+      backgroundImage: {
+        "circular-light":
+          "repeating-radial-gradient(rgba(0,0,0,0.4) 2px, #f5f5f5 5px, #f5f5f5 100px)",
+      },
     },
   },
   plugins: [],
