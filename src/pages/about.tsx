@@ -1,6 +1,7 @@
 import { profileImageAbout } from "@/assets/images/profile";
 import AnimatedNumber from "@/components/animated-number";
 import AnimatedText from "@/components/animated-text";
+import Education from "@/components/education";
 import Experience from "@/components/experience";
 import Layout from "@/components/layout";
 import Skills from "@/components/skills";
@@ -77,6 +78,7 @@ const About = () => {
           </div>
           <Skills />
           <Experience />
+          <Education />
         </Layout>
       </main>
     </>

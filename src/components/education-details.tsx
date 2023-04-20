@@ -3,20 +3,16 @@ import LiIcon from "./li-icon";
 import { motion } from "framer-motion";
 
 interface ExperienceDetailsProps {
-  position: string;
-  company: string;
-  companyUrl: string;
+  type: string;
   time: string;
-  address: string;
-  work: string;
+  place: string;
+  info: string;
 }
-const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
-  position,
-  company,
-  companyUrl,
+const EducationDetails: React.FC<ExperienceDetailsProps> = ({
+  type,
   time,
-  address,
-  work,
+  place,
+  info,
 }) => {
   const liRef = useRef(null);
   return (
@@ -40,16 +36,14 @@ const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
           once: true,
         }}
       >
-        <h3 className="capitalize font-bold text-2xl">
-          {position}&nbsp; @{company}
-        </h3>
+        <h3 className="capitalize font-bold text-2xl">{type}&nbsp;</h3>
         <span className="capitalize font-medium text-dark/75">
-          {time} | {address}
+          {time} | {place}
         </span>
-        <p className="font-medium w-full mt-2">{work}</p>
+        <p className="font-medium w-full mt-2">{info}</p>
       </motion.div>
     </li>
   );
 };
 
-export default ExperienceDetails;
+export default EducationDetails;

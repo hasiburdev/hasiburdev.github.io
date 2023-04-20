@@ -51,9 +51,9 @@ export default function Home() {
         </div>
       </Layout>
       <HireMe />
-      <div className="absolute right-8 bottom-8 inline-block w-24">
+      {/* <div className="absolute right-8 bottom-8 inline-block w-24">
         <Image src={lightBulb} alt="Hasibur Rahman" className="w-full h-auto" />
-      </div>
+      </div> */}
     </main>
   );
 }
