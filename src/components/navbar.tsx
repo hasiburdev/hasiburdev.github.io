@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { motion } from "framer-motion";
 import Logo from "./logo";
 import NavLink from "./navlink";
@@ -9,10 +8,18 @@ import {
   SunIcon,
   MoonIcon,
 } from "./icons";
+import useThemeSwitcher from "@/hooks/use-theme-switcher";
+import classNames from "classnames";
 
 const Navbar: React.FC = () => {
+  const { mode, setMode } = useThemeSwitcher();
   return (
-    <header className="w-full px-32 py-8 font-medium flex items-center justify-between relative">
+    <header
+      className={classNames(
+        "w-full px-32 py-8 font-medium flex items-center justify-between relative",
+        "dark:text-light"
+      )}
+    >
       <nav>
         <NavLink href="/" title="Home" className="mr-4" />
         <NavLink href="/about" title="About" className="mx-4" />
@@ -59,32 +66,18 @@ const Navbar: React.FC = () => {
         >
           <LinkedInIcon />
         </motion.a>
-        <motion.a
-          whileHover={{
-            y: -2,
-          }}
-          whileTap={{
-            scale: 0.9,
-          }}
-          className="w-6 mx-3"
-          href="https://linkedin.com"
-          target="_blank"
+
+        <button
+          className={classNames(
+            "ml-3 p-1 flex items-center justify-center rounded-full",
+            mode === "dark" ? "bg-light text-dark" : "bg-dark text-light"
+          )}
+          onClick={() =>
+            setMode((prevMode) => (prevMode === "dark" ? "" : "dark"))
+          }
         >
-          <SunIcon />
-        </motion.a>
-        <motion.a
-          whileHover={{
-            y: -2,
-          }}
-          whileTap={{
-            scale: 0.9,
-          }}
-          className="w-6 ml-3"
-          href="/"
-          target="_blank"
-        >
-          <MoonIcon />
-        </motion.a>
+          {mode === "dark" ? <SunIcon /> : <MoonIcon />}
+        </button>
       </nav>
       <div className="absolute left-1/2 translate-x-[-50%]">
         <Logo />

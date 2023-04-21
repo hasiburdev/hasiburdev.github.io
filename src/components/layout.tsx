@@ -11,7 +11,8 @@ const Layout: React.FC<LayoutProps> = ({ children, className }) => {
     <div
       className={classNames(
         className,
-        "h-full w-full inline-block z-0 bg-light p-32"
+        "h-full w-full inline-block z-0 bg-light p-32 ",
+        "dark:bg-dark"
       )}
     >
       {children}

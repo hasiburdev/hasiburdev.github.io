@@ -1,14 +1,17 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
+import classNames from "classnames";
 
-// Use framer motion here
 const MotionLink = motion(Link);
 
 const Logo = () => {
   return (
     <div className="flex items-center justify-center m-2">
       <MotionLink
-        className="w-16 h-16 bg-dark text-light flex items-center justify-center rounded-full text-2xl font-bold"
+        className={classNames(
+          " border border-solid border-transparent w-16 h-16 bg-dark text-light flex items-center justify-center rounded-full text-2xl font-bold",
+          "dark:border-light"
+        )}
         href="/"
         whileHover={{
           backgroundColor: [

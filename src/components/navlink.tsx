@@ -20,8 +20,10 @@ const NavLink: React.FC<NavLinkProps> = ({ title, href, className = "" }) => {
       {title}
       <span
         className={classNames(
-          "h-[1px] inline-block bg-dark absolute left-0 -bottom-0.5 group-hover:w-full transition-[width] ease-in-out duration-300",
-          router.asPath === href ? "w-full" : "w-0"
+          "h-[1px] inline-block bg-dark absolute left-0 -bottom-0.5 transition-[width] ease-in-out duration-300",
+          router.asPath === href ? "w-full" : "w-0",
+          "dark:bg-light",
+          "group-hover:w-full "
         )}
       >
         &nbsp;
