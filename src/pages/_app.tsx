@@ -21,7 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <main
         className={classNames(
           montserrat.variable,
-          "font-mont bg-light w-full min-h-screen ",
+          "font-mont bg-light w-full min-h-screen flex flex-col justify-between",
           "dark:bg-dark"
         )}
       >

@@ -2,5 +2,7 @@
 
 This project is built with Next.js
 
-Todos: 
+Todos:
+
 - [ ] Change the hover from position to transform
+- [ ] Fix responsive issue in xl footer

@@ -25,7 +25,8 @@ const Navbar: React.FC = () => {
     <header
       className={classNames(
         "w-full px-32 py-8 font-medium flex items-center justify-between relative",
-        "dark:text-light"
+        "dark:text-light",
+        "lg:px-16 md:px-12 sm:px-8 xs:px-4"
       )}
     >
       <button
@@ -125,7 +126,12 @@ const Navbar: React.FC = () => {
       </div>
       {isOpen && <NavbarMobile handleClose={handleIsOpen} />}
 
-      <div className="absolute left-1/2 translate-x-[-50%]">
+      <div
+        className={classNames(
+          "absolute left-1/2 translate-x-[-50%]",
+          "lg:left-auto lg:right-0"
+        )}
+      >
         <Logo />
       </div>
     </header>

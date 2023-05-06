@@ -7,16 +7,31 @@ const Footer = () => {
     <footer
       className={classNames(
         "w-full border-t-2 border-solid border-dark font-medium text-lg",
-        "dark:text-light dark:border-light"
+        "dark:text-light dark:border-light",
+        "sm:text-base"
       )}
     >
-      <Layout className="py-8 flex items-center justify-between">
+      <Layout
+        className={classNames(
+          "py-4 flex items-center justify-between",
+          "lg:flex-col lg:py-2",
+          "!xl:p-8 !lg:p-4 !md:p-4 !sm:p-4"
+        )}
+      >
         <span>
           {new Date().getFullYear()}
           &copy; All Rights Reserved.
         </span>
-        <div className="flex items-center">
-          Built with <span className={classNames("text-primary text-2xl px-1", "dark:text-primary-dark")}>&#9825;</span>
+        <div className={classNames("flex items-center", "lg:py-2")}>
+          Built with{" "}
+          <span
+            className={classNames(
+              "text-primary text-2xl px-1",
+              "dark:text-primary-dark"
+            )}
+          >
+            &#9825;
+          </span>
           <Link className="underline underline-offset-2" href="/">
             Hasibur Rahman
           </Link>

@@ -15,39 +15,71 @@ export default function Home() {
       <Head>
         <title>Hasibur Rahman</title>
       </Head>
-      <main className={classNames("dark:text-light")}>
-        <Layout>
-          <div className="flex items-center justify-between w-full">
-            <div className="w-1/2">
+      <main
+        className={classNames(
+          "flex justify-center items-center",
+          "dark:text-light"
+        )}
+      >
+        <Layout className={classNames("pt-0", "md:pt-16 sm:pt-8")}>
+          <div
+            className={classNames(
+              "flex items-center justify-between w-full",
+              "lg:flex-col"
+            )}
+          >
+            <div className={classNames("w-1/2", "md:w-full")}>
               <Image
                 src={profileImage}
                 alt="Hasibur Rahman"
-                className="w-full h-full"
+                className={classNames(
+                  "w-full h-full",
+                  "lg:hidden md:inline-block md:w-full"
+                )}
                 priority={true}
                 sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 50vw"
               />
             </div>
-            <div className="w-1/2 flex flex-col items-center self-center">
+            <div
+              className={classNames(
+                "w-1/2 flex flex-col items-center self-center",
+                "lg:w-full"
+              )}
+            >
               <AnimatedText
-                className="text-start"
+                className={classNames(
+                  "text-start",
+                  "xl:text-5xl lg:text-center lg:text-6xl md:text-5xl sm:text-3xl "
+                )}
                 text="Turning Vision Into Reality With Code And Design."
               />
-              <p className="my-4 text-base font-medium ">
+              <p
+                className={classNames(
+                  "my-4 text-base font-medium",
+                  "lg:text-center md:text-sm"
+                )}
+              >
                 As a skilled full-stack developer, I am dedicated to turning
                 ideas into innovative web applications. Explore my latest
                 projects and articles, showcasing my expertise in React.js and
                 web development.
               </p>
 
-              <div className="flex items-center self-start mt-2">
+              <div
+                className={classNames(
+                  "flex items-center w-full self-start mt-2",
+                  "lg:justify-center"
+                )}
+              >
                 <Link
                   href="/resume.pdf"
                   target="_blank"
                   className={classNames(
                     "flex items-center bg-dark text-light py-2.5 px-6 rounded-lg text-lg font-semibold border-2 border-solid border-transparent duration-300",
                     "dark:bg-light dark:text-dark",
-                    "hover:text-dark hover-bg-light hover:border-dark",
-                    "hover:dark:border-light hover:dark:bg-dark hover:dark:text-light"
+                    "hover:text-dark hover:bg-light hover:border-dark",
+                    "hover:dark:border-light hover:dark:bg-dark hover:dark:text-light",
+                    "md:py-2 md:px-4 md:text-base"
                   )}
                   download={true}
                 >
@@ -58,7 +90,8 @@ export default function Home() {
                   target="_blank"
                   className={classNames(
                     "ml-4 text-lg font-medium underline capitalize text-dark",
-                    "dark:text-light"
+                    "dark:text-light",
+                    "md:text-base"
                   )}
                 >
                   Contact

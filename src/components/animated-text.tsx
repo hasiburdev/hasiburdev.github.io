@@ -37,7 +37,8 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({ text, className }) => {
   return (
     <div
       className={classNames(
-        "mx-auto py-2 flex items-center justify-center text-center w-full overflow-hidden"
+        "mx-auto py-2 flex items-center justify-center text-center w-full overflow-hidden",
+        "sm:py-0"
       )}
     >
       <motion.h1
