@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { motion, useMotionValue } from "framer-motion";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
@@ -43,7 +44,13 @@ const MotionHoverImage: React.FC<MotionHoverImageProps> = ({
       href={link}
       target="_blank"
     >
-      <h2 className="capitalize text-xl font-semibold hover:underline">
+      <h2
+        className={classNames(
+          "capitalize text-dark decoration-dark text-xl font-semibold",
+          "hover:underline",
+          "dark:text-light dark:decoration:light"
+        )}
+      >
         {title}
       </h2>
       <FramerImage

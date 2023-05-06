@@ -3,6 +3,7 @@ import AnimatedText from "@/components/animated-text";
 import BlogCard from "@/components/blog-card";
 import FeaturedBlog from "@/components/featured-blog";
 import Layout from "@/components/layout";
+import classNames from "classnames";
 import Head from "next/head";
 
 const Blog = () => {
@@ -29,7 +30,7 @@ Follow this step-by-step guide to integrate Pagination component in your ReactJS
             <FeaturedBlog
               title="Build A Custom Pagination Component In Reactjs From Scratch"
               image={jsbookImage}
-              link="hasibur.me"
+              link="https://hasibur.me"
               time="9min read"
               summary="
 Learn how to build a custom pagination component in ReactJS from scratch. 
@@ -37,7 +38,12 @@ Follow this step-by-step guide to integrate Pagination component in your ReactJS
 "
             />
           </ul>
-          <h2 className="font-bold text-4xl w-full text-center my-16 mt-32">
+          <h2
+            className={classNames(
+              "font-bold text-4xl w-full text-center my-16 mt-32 text-dark",
+              "dark:text-light"
+            )}
+          >
             All Articles
           </h2>
           <ul>

@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { motion } from "framer-motion";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
@@ -20,8 +21,18 @@ const FeaturedBlog: React.FC<FeaturedBlogProps> = ({
   title,
 }) => {
   return (
-    <li className="relative col-span-1 w-full p-4 bg-light border border-solid border-dark rounded-2xl">
-      <div className="absolute top-0 -right-3 -z-10 w-[100%] h-[102%] rounded-3xl bg-dark" />
+    <li
+      className={classNames(
+        "relative col-span-1 w-full p-4 bg-light border border-solid border-dark rounded-2xl",
+        "dark:border-light dark:bg-dark"
+      )}
+    >
+      <div
+        className={classNames(
+          "absolute top-0 -right-3 -z-10 w-[100%] h-[102%] rounded-3xl bg-dark",
+          "dark:bg-light"
+        )}
+      />
       <Link
         href={link}
         target="_blank"
@@ -38,12 +49,27 @@ const FeaturedBlog: React.FC<FeaturedBlogProps> = ({
         />
       </Link>
       <Link href={link} target="_blank">
-        <h2 className="capitalize mt-4 text-2xl font-bold my-2 hover:underline underline-offset-2">
+        <h2
+          className={classNames(
+            "capitalize mt-4 text-2xl text-dark font-bold my-2 underline-offset-2",
+            "hover:underline",
+            "dark:text-light"
+          )}
+        >
           {title}
         </h2>
       </Link>
-      <p className="text-sm mb-2">{summary}</p>
-      <span className="text-primary font-semibold">{time}</span>
+      <p className={classNames("text-sm text-dark mb-2", "dark:text-light")}>
+        {summary}
+      </p>
+      <span
+        className={classNames(
+          "text-primary font-semibold",
+          "dark:text-primary-dark"
+        )}
+      >
+        {time}
+      </span>
     </li>
   );
 };
