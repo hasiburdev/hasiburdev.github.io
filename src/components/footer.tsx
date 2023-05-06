@@ -15,7 +15,7 @@ const Footer = () => {
         className={classNames(
           "py-4 flex items-center justify-between",
           "lg:flex-col lg:py-2",
-          "!xl:p-8 !lg:p-4 !md:p-4 !sm:p-4"
+          "!2xl:p-8 !xl:pt-[32px] !xl:pb-[32px] !lg:p-4 !md:p-4 !sm:p-4"
         )}
       >
         <span>
