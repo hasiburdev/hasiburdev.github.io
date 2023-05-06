@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { motion, useScroll } from "framer-motion";
-import { MutableRefObject, useRef } from "react";
+import { MutableRefObject } from "react";
 
 interface LiIconProps {
   reference: MutableRefObject<null>;
@@ -14,7 +14,7 @@ const LiIcon: React.FC<LiIconProps> = ({ reference }) => {
   return (
     <figure
       className={classNames(
-        "absolute left-0 stroke-dark ",
+        "absolute -left-9 stroke-dark ",
         "dark:stroke-light"
       )}
     >

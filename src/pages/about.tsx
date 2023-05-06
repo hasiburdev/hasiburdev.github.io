@@ -22,9 +22,26 @@ const About = () => {
         )}
       >
         <Layout className="pt-16">
-          <AnimatedText text="Passion fuels purpose!" className="mb-16" />
-          <div className="grid w-full grid-cols-8 gap-16 ">
-            <div className="col-span-3 flex flex-col items-start justify-start">
+          <AnimatedText
+            text="Passion fuels purpose!"
+            className={classNames(
+              "mb-16",
+              "lg:text-6xl sm:text-5xl xs:text-4xl"
+            )}
+          />
+          <div
+            className={classNames(
+              "grid w-full grid-cols-8 gap-16 ",
+              "sm:gap-8 "
+            )}
+          >
+            <div
+              className={classNames(
+                "col-span-3 flex flex-col items-start justify-start",
+                "xl:col-span-4",
+                "md:order-2 md:col-span-8"
+              )}
+            >
               <h2
                 className={classNames(
                   "mb-4 text-lg font-bold uppercase text-dark/75",
@@ -55,7 +72,9 @@ const About = () => {
             <div
               className={classNames(
                 "col-span-3 relative h-max rounded-3xl border-2 border-solid border-dark bg-light p-8",
-                "dark:bg-dark dark:border-light"
+                "dark:bg-dark dark:border-light",
+                "xl:col-span-4",
+                "md:order-1 md:col-span-8"
               )}
             >
               <div
@@ -72,41 +91,80 @@ const About = () => {
                 sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
               />
             </div>
-            <div className="col-span-2 flex flex-col items-end justify-between">
-              <div className="flex flex-col items-end justify-center">
-                <span className="inline-block text-7xl font-bold">
+            <div
+              className={classNames(
+                "col-span-2 flex flex-col items-end justify-between",
+                "xl:col-span-8 xl:flex-row",
+                "md:order-3"
+              )}
+            >
+              <div
+                className={classNames(
+                  "flex flex-col items-end justify-center",
+                  "xl:items-center"
+                )}
+              >
+                <span
+                  className={classNames(
+                    "inline-block text-7xl font-bold",
+                    "md:text-6xl sm:text-5xl xs:text-4xl"
+                  )}
+                >
                   <AnimatedNumber value={50} />+
                 </span>
                 <h2
                   className={classNames(
                     "text-xl font-medium capitalize text-dark/75",
-                    "dark:text-light/75"
+                    "dark:text-light/75",
+                    "md:text-lg sm:text-base xs:text-sm"
                   )}
                 >
                   Satisfied Clients
                 </h2>
               </div>
-              <div className="flex flex-col items-end justify-center">
-                <span className="inline-block text-7xl font-bold">
+              <div
+                className={classNames(
+                  "flex flex-col items-end justify-center",
+                  "xl:items-center"
+                )}
+              >
+                <span
+                  className={classNames(
+                    "inline-block text-7xl font-bold",
+                    "md:text-6xl sm:text-5xl xs:text-4xl"
+                  )}
+                >
                   <AnimatedNumber value={40} />+
                 </span>
                 <h2
                   className={classNames(
                     "text-xl font-medium capitalize text-dark/75",
-                    "dark:text-light/75"
+                    "dark:text-light/75",
+                    "md:text-lg sm:text-base xs:text-sm"
                   )}
                 >
                   Projects completed
                 </h2>
               </div>
-              <div className="flex flex-col items-end justify-center">
-                <span className="inline-block text-7xl font-bold">
+              <div
+                className={classNames(
+                  "flex flex-col items-end justify-center",
+                  "xl:items-center"
+                )}
+              >
+                <span
+                  className={classNames(
+                    "inline-block text-7xl font-bold",
+                    "md:text-6xl sm:text-5xl xs:text-4xl"
+                  )}
+                >
                   <AnimatedNumber value={4} />+
                 </span>
                 <h2
                   className={classNames(
                     "text-xl font-medium capitalize text-dark/75",
-                    "dark:text-light/75"
+                    "dark:text-light/75",
+                    "md:text-lg sm:text-base xs:text-sm"
                   )}
                 >
                   Years of Experience
