@@ -68,6 +68,8 @@ const About = () => {
                 src={profileImageAbout}
                 alt="Hasibur Rahman"
                 className="w-full h-auto rounded-2xl"
+                priority={true}
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
               />
             </div>
             <div className="col-span-2 flex flex-col items-end justify-between">

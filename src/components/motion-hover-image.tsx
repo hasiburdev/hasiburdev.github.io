@@ -71,6 +71,8 @@ const MotionHoverImage: React.FC<MotionHoverImageProps> = ({
         src={image}
         alt={title}
         className="z-10 w-96 h-auto absolute rounded-lg hidden"
+        priority={true}
+        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 50vw"
       />
     </Link>
   );

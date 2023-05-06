@@ -23,6 +23,8 @@ export default function Home() {
                 src={profileImage}
                 alt="Hasibur Rahman"
                 className="w-full h-full"
+                priority={true}
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 50vw"
               />
             </div>
             <div className="w-1/2 flex flex-col items-center self-center">

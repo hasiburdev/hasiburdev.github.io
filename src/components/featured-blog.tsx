@@ -46,6 +46,8 @@ const FeaturedBlog: React.FC<FeaturedBlogProps> = ({
           src={image}
           alt={title}
           className="w-full h-auto"
+          priority={true}
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 50vw"
         />
       </Link>
       <Link href={link} target="_blank">

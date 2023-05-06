@@ -37,7 +37,13 @@ const Project: React.FC<ProjectProps> = ({
       target="_blank"
       className="w-full cursor-pointer overflow-hidden rounded-lg"
     >
-      <Image src={image} alt={title} className="w-full h-auto" />
+      <Image
+        src={image}
+        alt={title}
+        className="w-full h-auto"
+        priority={true}
+        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 50vw"
+      />
     </Link>
     <div className="w-full flex flex-col items-start justify-between mt-4">
       <span
