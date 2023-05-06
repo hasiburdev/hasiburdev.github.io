@@ -10,9 +10,17 @@ import {
 } from "./icons";
 import useThemeSwitcher from "@/hooks/use-theme-switcher";
 import classNames from "classnames";
+import { useState } from "react";
+import NavbarMobile from "./navbar-mobile";
 
 const Navbar: React.FC = () => {
   const { mode, setMode } = useThemeSwitcher();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleIsOpen = () => {
+    setIsOpen((prev) => !prev);
+  };
+
   return (
     <header
       className={classNames(
@@ -20,65 +28,103 @@ const Navbar: React.FC = () => {
         "dark:text-light"
       )}
     >
-      <nav>
-        <NavLink href="/" title="Home" className="mr-4" />
-        <NavLink href="/about" title="About" className="mx-4" />
-        <NavLink href="/projects" title="Projects" className="mx-4" />
-        <NavLink href="/blog" title="Blog" className="ml-4" />
-      </nav>
-      <nav className="flex items-center justify-center flex-wrap">
-        <motion.a
-          whileHover={{
-            y: -2,
-          }}
-          whileTap={{
-            scale: 0.9,
-          }}
-          className="w-6 mr-3"
-          href="https://twitter.com/hasiburdev"
-          target="_blank"
-        >
-          <TwitterIcon />
-        </motion.a>
-        <motion.a
-          whileHover={{
-            y: -2,
-          }}
-          whileTap={{
-            scale: 0.9,
-          }}
-          className="w-6 mx-3"
-          href="https://github.com/hasiburdev"
-          target="_blank"
-        >
-          <GithubIcon />
-        </motion.a>
-        <motion.a
-          whileHover={{
-            y: -2,
-          }}
-          whileTap={{
-            scale: 0.9,
-          }}
-          className="w-6 mx-3"
-          href="/"
-          target="_blank"
-        >
-          <LinkedInIcon />
-        </motion.a>
-
-        <button
+      <button
+        className={classNames(
+          "flex flex-col justify-center items-center hidden",
+          "lg:flex"
+        )}
+        onClick={handleIsOpen}
+      >
+        <span
           className={classNames(
-            "ml-3 p-1 flex items-center justify-center rounded-full",
-            mode === "dark" ? "bg-light text-dark" : "bg-dark text-light"
+            "bg-dark block h-0.5 w-6 rounded-sm ease-out transition-all duration-300",
+            "dark:bg-light",
+            isOpen ? "rotate-45 translate-y-1" : "-translate-y-0.5"
           )}
-          onClick={() =>
-            setMode((prevMode) => (prevMode === "dark" ? "light" : "dark"))
-          }
-        >
-          {mode === "dark" ? <SunIcon /> : <MoonIcon />}
-        </button>
-      </nav>
+        ></span>
+        <span
+          className={classNames(
+            "bg-dark block h-0.5 w-6 ease-out transition-all duration-300 rounded-sm my-0.5",
+            "dark:bg-light",
+            isOpen ? "opacity-0" : "opacity-100"
+          )}
+        ></span>
+        <span
+          className={classNames(
+            "bg-dark block h-0.5 w-6 rounded-sm",
+            "dark:bg-light",
+            isOpen ? "-rotate-45 -translate-y-1" : "translate-y-0.5"
+          )}
+        ></span>
+      </button>
+      <div
+        className={classNames(
+          "w-full flex justify-between items-center",
+          "lg:hidden"
+        )}
+      >
+        <nav>
+          <NavLink href="/" title="Home" className="mr-4" />
+          <NavLink href="/about" title="About" className="mx-4" />
+          <NavLink href="/projects" title="Projects" className="mx-4" />
+          <NavLink href="/blog" title="Blog" className="ml-4" />
+        </nav>
+        <nav className="flex items-center justify-center flex-wrap">
+          <motion.a
+            whileHover={{
+              y: -2,
+            }}
+            whileTap={{
+              scale: 0.9,
+            }}
+            className="w-6 mr-3"
+            href="https://twitter.com/hasiburdev"
+            target="_blank"
+          >
+            <TwitterIcon />
+          </motion.a>
+          <motion.a
+            whileHover={{
+              y: -2,
+            }}
+            whileTap={{
+              scale: 0.9,
+            }}
+            className="w-6 mx-3"
+            href="https://github.com/hasiburdev"
+            target="_blank"
+          >
+            <GithubIcon />
+          </motion.a>
+          <motion.a
+            whileHover={{
+              y: -2,
+            }}
+            whileTap={{
+              scale: 0.9,
+            }}
+            className="w-6 mx-3"
+            href="/"
+            target="_blank"
+          >
+            <LinkedInIcon />
+          </motion.a>
+
+          <button
+            className={classNames(
+              "ml-3 p-1 flex items-center justify-center rounded-full",
+              mode === "dark" ? "bg-light text-dark" : "bg-dark text-light"
+            )}
+            onClick={() =>
+              setMode((prevMode) => (prevMode === "dark" ? "light" : "dark"))
+            }
+          >
+            {mode === "dark" ? <SunIcon /> : <MoonIcon />}
+          </button>
+        </nav>
+      </div>
+      {isOpen && <NavbarMobile handleClose={handleIsOpen} />}
+
       <div className="absolute left-1/2 translate-x-[-50%]">
         <Logo />
       </div>
