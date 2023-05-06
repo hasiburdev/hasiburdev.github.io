@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import ExperienceDetails from "./experience-details";
 import { useScroll, motion } from "framer-motion";
+import classNames from "classnames";
 
 const Experience = () => {
   const ref = useRef(null);
@@ -19,7 +20,10 @@ const Experience = () => {
           style={{
             scaleY: scrollYProgress,
           }}
-          className="absolute left-9 top-[2px] w-[4px] h-full bg-dark origin-top"
+          className={classNames(
+            "absolute left-9 top-[2px] w-[4px] h-full bg-dark origin-top",
+            "dark:bg-light"
+          )}
         />
         <ul className="w-full flex flex-col items-start justify-between ml-8 pl-24">
           <ExperienceDetails

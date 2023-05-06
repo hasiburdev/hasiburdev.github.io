@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { motion } from "framer-motion";
 interface SkillProps {
   name: string;
@@ -17,14 +18,17 @@ const Skill: React.FC<SkillProps> = ({ name, x, y }) => {
       whileInView={{
         x,
         y,
+        transition: {
+          duration: 1.5,
+        },
       }}
       viewport={{
         once: true,
       }}
-      transition={{
-        duration: 1.5,
-      }}
-      className="flex items-center justify-center rounded-full font-semibold bg-dark text-light py-3 px-6 absolute shadow dark cursor-pointer"
+      className={classNames(
+        "flex items-center justify-center rounded-full font-semibold bg-dark text-light py-3 px-6 absolute shadow dark cursor-pointer",
+        "dark:text-dark dark:bg-light"
+      )}
     >
       {name}
     </motion.div>

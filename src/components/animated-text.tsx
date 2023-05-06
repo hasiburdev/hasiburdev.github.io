@@ -46,7 +46,8 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({ text, className }) => {
         animate="animate"
         className={classNames(
           className,
-          "inline-block w-full text-dark font-bold capitalize text-6xl"
+          "inline-block w-full text-dark font-bold capitalize text-6xl",
+          "dark:text-light"
         )}
       >
         {text.split(" ").map((word, index) => (

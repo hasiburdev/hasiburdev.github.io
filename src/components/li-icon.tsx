@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { motion, useScroll } from "framer-motion";
 import { MutableRefObject, useRef } from "react";
 
@@ -10,9 +11,13 @@ const LiIcon: React.FC<LiIconProps> = ({ reference }) => {
     target: reference,
     offset: ["center end", "center center"],
   });
-  console.log(scrollYProgress);
   return (
-    <figure className="absolute left-0 stroke-dark ">
+    <figure
+      className={classNames(
+        "absolute left-0 stroke-dark ",
+        "dark:stroke-light"
+      )}
+    >
       <svg
         width="75"
         height="75"
@@ -23,7 +28,10 @@ const LiIcon: React.FC<LiIconProps> = ({ reference }) => {
           cx="75"
           cy="50"
           r="20"
-          className="stroke-primary stroke-1 fill-none"
+          className={classNames(
+            "stroke-primary stroke-1 fill-none",
+            "dark:stroke-primary-dark"
+          )}
         />
         <motion.circle
           style={{
@@ -32,13 +40,16 @@ const LiIcon: React.FC<LiIconProps> = ({ reference }) => {
           cx="75"
           cy="50"
           r="20"
-          className="stroke-[5px] fill-light"
+          className={classNames("stroke-[5px] fill-light", "dark:fill-dark")}
         />
         <circle
           cx="75"
           cy="50"
           r="10"
-          className="stroke-1 fill-primary animate-pulse"
+          className={classNames(
+            "stroke-1 fill-primary animate-pulse",
+            "dark:fill-primary-dark"
+          )}
         />
       </svg>
     </figure>

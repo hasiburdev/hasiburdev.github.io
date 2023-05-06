@@ -11,10 +11,6 @@ interface NavLinkProps {
 
 const NavLink: React.FC<NavLinkProps> = ({ title, href, className = "" }) => {
   const router = useRouter();
-  console.log({
-    router,
-    href,
-  });
   return (
     <Link href={href} className={`${className} relative group`}>
       {title}

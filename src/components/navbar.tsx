@@ -73,7 +73,7 @@ const Navbar: React.FC = () => {
             mode === "dark" ? "bg-light text-dark" : "bg-dark text-light"
           )}
           onClick={() =>
-            setMode((prevMode) => (prevMode === "dark" ? "" : "dark"))
+            setMode((prevMode) => (prevMode === "dark" ? "light" : "dark"))
           }
         >
           {mode === "dark" ? <SunIcon /> : <MoonIcon />}

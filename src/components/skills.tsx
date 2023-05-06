@@ -1,15 +1,24 @@
 import { motion } from "framer-motion";
 import Skill from "./skill";
+import classNames from "classnames";
 const Skills = () => {
   return (
     <div>
       <h2 className="font-bold text-6xl w-full mt-64 text-center">Skills</h2>
-      <div className="w-full relative h-screen flex items-center justify-center rounded-full bg-circular-light rounded-full">
+      <div
+        className={classNames(
+          "w-full relative h-screen flex items-center justify-center rounded-full bg-circular-light rounded-full",
+          "dark:bg-circular-dark"
+        )}
+      >
         <motion.div
           whileHover={{
             scale: 1.05,
           }}
-          className="flex items-center justify-center rounded-full font-semibold bg-dark text-light p-8 shadow-dark cursor-pointer"
+          className={classNames(
+            "flex items-center justify-center rounded-full font-semibold bg-dark text-light p-8 shadow-dark cursor-pointer",
+            "dark:text-dark dark:bg-light"
+          )}
         >
           Web
         </motion.div>

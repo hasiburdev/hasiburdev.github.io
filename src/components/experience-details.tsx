@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import LiIcon from "./li-icon";
 import { motion } from "framer-motion";
+import classNames from "classnames";
 
 interface ExperienceDetailsProps {
   position: string;
@@ -40,10 +41,20 @@ const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
           once: true,
         }}
       >
-        <h3 className="capitalize font-bold text-2xl">
+        <h3
+          className={classNames(
+            "capitalize font-bold text-2xl text-dark",
+            "dark:text-light"
+          )}
+        >
           {position}&nbsp; @{company}
         </h3>
-        <span className="capitalize font-medium text-dark/75">
+        <span
+          className={classNames(
+            "capitalize font-medium text-dark/75",
+            "dark:text-light/75"
+          )}
+        >
           {time} | {address}
         </span>
         <p className="font-medium w-full mt-2">{work}</p>
