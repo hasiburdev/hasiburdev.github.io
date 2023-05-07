@@ -29,7 +29,7 @@ const Skill: React.FC<SkillProps> = ({ name, x, y }) => {
         "flex items-center justify-center rounded-full font-semibold bg-dark text-light py-1.5 px-3 absolute shadow dark cursor-pointer border border-solid border-transparent",
         "dark:text-dark dark:bg-light",
         "md:text-sm md:py-1.5 md:px-3",
-        "xs:bg-transparent xs:border-dark",
+        "xs:bg-transparent xs:border-dark xs:text-dark",
         "xs:dark:bg-transparent xs:dark:text-light xs:dark:border-light"
       )}
     >

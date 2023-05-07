@@ -5,4 +5,5 @@ This project is built with Next.js
 Todos:
 
 - [ ] Change the hover from position to transform
-- [ ] Fix responsive issue in xl footer
+- [x] Fix responsive issue in xl footer
+- [ ] Logo padding doesn't change on responsive mode.

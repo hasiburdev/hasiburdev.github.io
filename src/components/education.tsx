@@ -11,8 +11,15 @@ const Education = () => {
     offset: ["start end", "center start"],
   });
   return (
-    <div className="my-64">
-      <h2 className="font-bold text-6xl mb-24 w-full text-center">Education</h2>
+    <div className={classNames("my-64", "md:my-32 sm:my-24 xs:my-20")}>
+      <h2
+        className={classNames(
+          "font-bold text-6xl mb-24 w-full text-center",
+          "md:text-5xl md:mb-16 sm:4xl xs:3xl"
+        )}
+      >
+        Education
+      </h2>
       <div
         className={classNames(
           "w-3/4 mx-auto relative",
@@ -29,7 +36,7 @@ const Education = () => {
             "dark:bg-light"
           )}
         />
-        <ul className="w-full flex flex-col items-start justify-between ml-8 pl-24">
+        <ul className="w-full flex flex-col items-start justify-between">
           <EducationDetails
             type="B.Sc. in Electronics and Communication Engineering"
             time="2021-Present"

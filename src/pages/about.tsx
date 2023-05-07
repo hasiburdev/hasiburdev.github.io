@@ -71,7 +71,7 @@ const About = () => {
             </div>
             <div
               className={classNames(
-                "col-span-3 relative h-max rounded-3xl border-2 border-solid border-dark bg-light p-8",
+                "col-span-3 relative h-max border-2 border-solid border-dark bg-light p-8",
                 "dark:bg-dark dark:border-light",
                 "xl:col-span-4",
                 "md:order-1 md:col-span-8"
@@ -79,14 +79,14 @@ const About = () => {
             >
               <div
                 className={classNames(
-                  "absolute top-0 -right-3 -z-10 w-[102%] h-[102%] rounded-3xl bg-dark",
+                  "absolute top-0 -right-2 -z-10 w-[102%] h-[102%] bg-dark",
                   "dark:bg-light"
                 )}
               />
               <Image
                 src={profileImageAbout}
                 alt="Hasibur Rahman"
-                className="w-full h-auto rounded-2xl"
+                className="w-full h-auto"
                 priority={true}
                 sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
               />
@@ -114,7 +114,7 @@ const About = () => {
                 </span>
                 <h2
                   className={classNames(
-                    "text-xl font-medium capitalize text-dark/75",
+                    "text-xl font-medium capitalize text-dark/75 text-center",
                     "dark:text-light/75",
                     "md:text-lg sm:text-base xs:text-sm"
                   )}
@@ -138,7 +138,7 @@ const About = () => {
                 </span>
                 <h2
                   className={classNames(
-                    "text-xl font-medium capitalize text-dark/75",
+                    "text-xl font-medium capitalize text-dark/75 text-center",
                     "dark:text-light/75",
                     "md:text-lg sm:text-base xs:text-sm"
                   )}
@@ -162,7 +162,7 @@ const About = () => {
                 </span>
                 <h2
                   className={classNames(
-                    "text-xl font-medium capitalize text-dark/75",
+                    "text-xl font-medium capitalize text-dark/75 text-center",
                     "dark:text-light/75",
                     "md:text-lg sm:text-base xs:text-sm"
                   )}

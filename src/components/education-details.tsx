@@ -19,7 +19,10 @@ const EducationDetails: React.FC<ExperienceDetailsProps> = ({
   return (
     <li
       ref={liRef}
-      className="my-8 first:mt-0 last:mb-0 w-60% mx-auto flex flex-col items-center justify-between"
+      className={classNames(
+        "my-8 first:mt-0 last:mb-0 w-[60%] mx-auto flex flex-col items-center justify-between",
+        "md:w-[80%]"
+      )}
     >
       <LiIcon reference={liRef} />
       <motion.div
@@ -37,7 +40,15 @@ const EducationDetails: React.FC<ExperienceDetailsProps> = ({
           once: true,
         }}
       >
-        <h3 className="capitalize font-bold text-2xl">{type}&nbsp;</h3>
+        <h3
+          className={classNames(
+            "capitalize font-bold text-2xl text-dark",
+            "dark:text-light",
+            "sm:text-xl xs:text-lg"
+          )}
+        >
+          {type}&nbsp;
+        </h3>
         <span
           className={classNames(
             "capitalize font-medium text-dark/75",
