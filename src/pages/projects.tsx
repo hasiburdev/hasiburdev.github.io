@@ -4,6 +4,7 @@ import Layout from "@/components/layout";
 import Head from "next/head";
 import { jsbookImage } from "@/assets/images";
 import Project from "@/components/project";
+import classNames from "classnames";
 
 const Projects = () => {
   return (
@@ -16,9 +17,17 @@ const Projects = () => {
         <Layout className="pt-16">
           <AnimatedText
             text="Imagination Trumps Knowledge!"
-            className="mb-16"
+            className={classNames(
+              "mb-16",
+              "lg:text-6xl md:text-5xl sm:mb-8 sm:text-4xl xs:text-3xl"
+            )}
           />
-          <div className="grid grid-cols-12 gap-24">
+          <div
+            className={classNames(
+              "grid grid-cols-12 gap-24",
+              "xl:gap-x-16 lg:gap-x-8 md:gap-y-24 sm:gap-x-2"
+            )}
+          >
             <div className="col-span-12">
               <FeaturedProject
                 githubLink="https://github.com/hasiburdev/jsbook"
@@ -29,7 +38,7 @@ const Projects = () => {
                 image={jsbookImage}
               />
             </div>
-            <div className="col-span-6">
+            <div className={classNames("col-span-6", "sm:col-span-12")}>
               <Project
                 githubLink="https://github.com/hasiburdev/jsbook"
                 summary="Lorem ipsum"
@@ -39,7 +48,7 @@ const Projects = () => {
                 image={jsbookImage}
               />
             </div>
-            <div className="col-span-6">
+            <div className={classNames("col-span-6", "sm:col-span-12")}>
               <Project
                 githubLink="https://github.com/hasiburdev/jsbook"
                 summary="Lorem ipsum"
@@ -49,17 +58,8 @@ const Projects = () => {
                 image={jsbookImage}
               />
             </div>
-            <div className="col-span-12">
-              <FeaturedProject
-                githubLink="https://github.com/hasiburdev/jsbook"
-                summary="Lorem ipsum"
-                link="https://jsbook-editor.vercel.app"
-                title="Browser-based JavaScript Runtime"
-                type="website"
-                image={jsbookImage}
-              />
-            </div>
-            <div className="col-span-6">
+
+            <div className={classNames("col-span-6", "sm:col-span-12")}>
               <Project
                 githubLink="https://github.com/hasiburdev/jsbook"
                 summary="Lorem ipsum"
@@ -69,7 +69,7 @@ const Projects = () => {
                 image={jsbookImage}
               />
             </div>
-            <div className="col-span-6">
+            <div className={classNames("col-span-6", "sm:col-span-12")}>
               <Project
                 githubLink="https://github.com/hasiburdev/jsbook"
                 summary="Lorem ipsum"

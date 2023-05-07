@@ -22,20 +22,21 @@ const Project: React.FC<ProjectProps> = ({
 }) => (
   <article
     className={classNames(
-      "w-full flex items-center justify-center rounded-2xl border border-solid border-dark bg-light relative p-6 flex-col",
-      "dark:bg-dark dark:border-light"
+      "w-full flex items-center justify-center border border-solid border-dark bg-light relative p-6 flex-col",
+      "dark:bg-dark dark:border-light",
+      "lg:p-4 md:p-4 sm:p-3 xs:p-2"
     )}
   >
     <div
       className={classNames(
-        "absolute top-0 -right-1 -z-10 w-[100%] h-[101%] rounded-3xl bg-dark",
+        "absolute top-1 -right-1 -z-10 w-[100%] h-[100%] bg-dark",
         "dark:bg-light"
       )}
     />
     <Link
       href={link}
       target="_blank"
-      className="w-full cursor-pointer overflow-hidden rounded-lg"
+      className="w-full cursor-pointer overflow-hidden"
     >
       <Image
         src={image}
@@ -49,7 +50,8 @@ const Project: React.FC<ProjectProps> = ({
       <span
         className={classNames(
           "text-primary font-medium text-xl",
-          "dark:text-primary-dark"
+          "dark:text-primary-dark",
+          "md:text-base xs:text-sm"
         )}
       >
         {type}
@@ -66,7 +68,8 @@ const Project: React.FC<ProjectProps> = ({
         <h2
           className={classNames(
             "my-2 w-full text-left text-3xl font-bold text-dark",
-            "dark:text-light"
+            "dark:text-light",
+            "lg:text-xl md:text-lg sm:text-base"
           )}
         >
           {title}
@@ -82,13 +85,21 @@ const Project: React.FC<ProjectProps> = ({
           href={link}
           target="_blank"
           className={classNames(
-            "underline py-2 px-6 text-lg font-semibold text-dark",
+            "underline py-2 px-0 text-lg font-semibold text-dark",
             "dark:text-light"
           )}
         >
           Visit
         </Link>
-        <Link href={githubLink} target="_blank" className="w-8">
+        <Link
+          href={githubLink}
+          target="_blank"
+          className={classNames(
+            "w-8 rounded-full",
+            "dark:bg-light",
+            "md:order-2"
+          )}
+        >
           <GithubIcon />
         </Link>
       </div>
