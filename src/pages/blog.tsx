@@ -1,24 +1,55 @@
-import { jsbookImage } from "@/assets/images";
 import AnimatedText from "@/components/animated-text";
 import BlogCard from "@/components/blog-card";
 import FeaturedBlog from "@/components/featured-blog";
 import Layout from "@/components/layout";
 import TransitionEffect from "@/components/transition-effect";
+import { BlogPageProps } from "@/interfaces/blog";
 import classNames from "classnames";
+import { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
+import { blogPageData } from "../../data/blog";
 
-const Blog = () => {
+const Blog: NextPage<BlogPageProps> = ({
+  animatedText,
+  blogs,
+  metaDescription,
+  pageTitle,
+}) => {
+  const renderedFeaturedBlogs = blogs
+    .slice(0, 2)
+    .map((blog, index) => (
+      <FeaturedBlog
+        image={blog.image}
+        link={blog.link}
+        summary={blog.summary || ""}
+        title={blog.title}
+        key={index}
+        time={blog.time || "2min read"}
+      />
+    ));
+
+  const renderedBlogs = blogs
+    .slice(2)
+    .map((blog, index) => (
+      <BlogCard
+        image={blog.image}
+        title={blog.title}
+        date={blog.date || ""}
+        link={blog.link}
+        key={index}
+      />
+    ));
   return (
     <>
       <Head>
-        <title>Blog | Hasibur Rahman</title>
-        <meta name="description" content="Blog page of Hasibur" />
+        <title>{pageTitle}</title>
+        <meta name="description" content={metaDescription} />
       </Head>
       <TransitionEffect />
       <main className="w-full mb-16 flex flex-col items-center justify-center overflow-hidden">
         <Layout className="pt-16">
           <AnimatedText
-            text="Words can change the world!"
+            text={animatedText}
             className={classNames(
               "mb-16",
               "lg:text-6xl md:text-5xl sm:mb-8 sm:text-4xl xs:text-3xl"
@@ -27,26 +58,7 @@ const Blog = () => {
           <ul
             className={classNames("grid grid-cols-2 gap-16", "md:grid-cols-1")}
           >
-            <FeaturedBlog
-              title="Build A Custom Pagination Component In Reactjs From Scratch"
-              image={jsbookImage}
-              link="hasibur.me"
-              time="9min read"
-              summary="
-Learn how to build a custom pagination component in ReactJS from scratch. 
-Follow this step-by-step guide to integrate Pagination component in your ReactJS project.
-"
-            />
-            <FeaturedBlog
-              title="Build A Custom Pagination Component In Reactjs From Scratch"
-              image={jsbookImage}
-              link="https://hasibur.me"
-              time="9min read"
-              summary="
-Learn how to build a custom pagination component in ReactJS from scratch. 
-Follow this step-by-step guide to integrate Pagination component in your ReactJS project.
-"
-            />
+            {renderedFeaturedBlogs}
           </ul>
           <h2
             className={classNames(
@@ -56,58 +68,7 @@ Follow this step-by-step guide to integrate Pagination component in your ReactJS
           >
             All Articles
           </h2>
-          <ul>
-            <BlogCard
-              image={jsbookImage}
-              title={
-                "Build A Custom Pagination Component In Reactjs From Scratch"
-              }
-              date={"March 22, 2023"}
-              link={"/"}
-            />
-
-            <BlogCard
-              image={jsbookImage}
-              title={
-                "Build A Custom Pagination Component In Reactjs From Scratch"
-              }
-              date={"March 22, 2023"}
-              link={"/"}
-            />
-
-            <BlogCard
-              image={jsbookImage}
-              title={
-                "Build A Custom Pagination Component In Reactjs From Scratch"
-              }
-              date={"March 22, 2023"}
-              link={"/"}
-            />
-            <BlogCard
-              image={jsbookImage}
-              title={
-                "Build A Custom Pagination Component In Reactjs From Scratch"
-              }
-              date={"March 22, 2023"}
-              link={"/"}
-            />
-            <BlogCard
-              image={jsbookImage}
-              title={
-                "Build A Custom Pagination Component In Reactjs From Scratch"
-              }
-              date={"March 22, 2023"}
-              link={"/"}
-            />
-            <BlogCard
-              image={jsbookImage}
-              title={
-                "Build A Custom Pagination Component In Reactjs From Scratch"
-              }
-              date={"March 22, 2023"}
-              link={"/"}
-            />
-          </ul>
+          <ul>{renderedBlogs}</ul>
         </Layout>
       </main>
     </>
@@ -115,3 +76,9 @@ Follow this step-by-step guide to integrate Pagination component in your ReactJS
 };
 
 export default Blog;
+
+export const getStaticProps: GetStaticProps<BlogPageProps> = async () => {
+  return {
+    props: blogPageData,
+  };
+};
