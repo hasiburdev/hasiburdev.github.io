@@ -3,6 +3,7 @@ import AnimatedText from "@/components/animated-text";
 import BlogCard from "@/components/blog-card";
 import FeaturedBlog from "@/components/featured-blog";
 import Layout from "@/components/layout";
+import TransitionEffect from "@/components/transition-effect";
 import classNames from "classnames";
 import Head from "next/head";
 
@@ -13,6 +14,7 @@ const Blog = () => {
         <title>Blog | Hasibur Rahman</title>
         <meta name="description" content="Blog page of Hasibur" />
       </Head>
+      <TransitionEffect />
       <main className="w-full mb-16 flex flex-col items-center justify-center overflow-hidden">
         <Layout className="pt-16">
           <AnimatedText

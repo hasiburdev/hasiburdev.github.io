@@ -6,8 +6,7 @@ import Link from "next/link";
 import { LinkArrow } from "@/components/icons";
 import Head from "next/head";
 import classNames from "classnames";
-// import HireMe from "@/components/hire-me";
-// import { lightBulb } from "@/assets/images/svgs";
+import TransitionEffect from "@/components/transition-effect";
 
 export default function Home() {
   return (
@@ -15,6 +14,7 @@ export default function Home() {
       <Head>
         <title>Hasibur Rahman</title>
       </Head>
+      <TransitionEffect />
       <main
         className={classNames(
           "flex justify-center items-center",
@@ -100,10 +100,6 @@ export default function Home() {
             </div>
           </div>
         </Layout>
-        {/* <HireMe /> */}
-        {/* <div className="absolute right-8 bottom-8 inline-block w-24">
-        <Image src={lightBulb} alt="Hasibur Rahman" className="w-full h-auto" />
-      </div> */}
       </main>
     </>
   );

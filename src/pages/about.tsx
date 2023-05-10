@@ -5,6 +5,7 @@ import Education from "@/components/education";
 import Experience from "@/components/experience";
 import Layout from "@/components/layout";
 import Skills from "@/components/skills";
+import TransitionEffect from "@/components/transition-effect";
 import classNames from "classnames";
 import Head from "next/head";
 import Image from "next/image";
@@ -15,6 +16,7 @@ const About = () => {
       <Head>
         <title>About | Hasibur Rahman</title>
       </Head>
+      <TransitionEffect />
       <main
         className={classNames(
           "flex w-full flex-col items-center justify-center",
