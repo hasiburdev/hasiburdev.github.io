@@ -4,15 +4,17 @@ import Layout from "@/components/layout";
 import Head from "next/head";
 import SingleProject from "@/components/project";
 import classNames from "classnames";
-import { Project } from "@/interfaces";
+import { ProjectPageProps } from "@/interfaces";
 import TransitionEffect from "@/components/transition-effect";
 import { GetStaticProps, NextPage } from "next";
+import { projects } from "../../data";
 
-interface ProjectsProps {
-  projects: Project[];
-}
-
-const Projects: NextPage<ProjectsProps> = ({ projects }) => {
+const Projects: NextPage<ProjectPageProps> = ({
+  projects,
+  animatedText,
+  pageTitle,
+  metaDescription,
+}) => {
   const renderedProjects = projects.map((project, index) => {
     if (index === 0)
       return (
@@ -44,14 +46,14 @@ const Projects: NextPage<ProjectsProps> = ({ projects }) => {
   return (
     <>
       <Head>
-        <title>Projects | Hasibur Rahman</title>
-        <meta name="description" content="Coding Projects of Hasibur Rahman" />
+        <title>{pageTitle}</title>
+        <meta name="description" content={metaDescription} />
       </Head>
       <TransitionEffect />
       <main className="w-full mb-16 flex flex-col items-center justify-center">
         <Layout className="pt-16">
           <AnimatedText
-            text="Imagination Trumps Knowledge!"
+            text={animatedText}
             className={classNames(
               "mb-16",
               "lg:text-6xl md:text-5xl sm:mb-8 sm:text-4xl xs:text-3xl"
@@ -73,12 +75,8 @@ const Projects: NextPage<ProjectsProps> = ({ projects }) => {
 
 export default Projects;
 
-import { projects } from "../../data";
-
-export const getStaticProps: GetStaticProps<ProjectsProps> = async () => {
+export const getStaticProps: GetStaticProps<ProjectPageProps> = async () => {
   return {
-    props: {
-      projects,
-    },
+    props: projects,
   };
 };

@@ -9,3 +9,10 @@ export interface Project {
   image: StaticImageData;
   featured?: boolean;
 }
+
+export interface ProjectPageProps {
+  projects: Project[];
+  animatedText: string;
+  pageTitle: string;
+  metaDescription: string;
+}
