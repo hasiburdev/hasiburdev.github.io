@@ -23,20 +23,21 @@ const FeaturedBlog: React.FC<FeaturedBlogProps> = ({
   return (
     <li
       className={classNames(
-        "relative col-span-1 w-full p-4 bg-light border border-solid border-dark rounded-2xl",
+        "relative col-span-1 w-full p-4 bg-light border border-solid border-dark",
         "dark:border-light dark:bg-dark"
       )}
     >
       <div
         className={classNames(
-          "absolute top-0 -right-3 -z-10 w-[100%] h-[102%] rounded-3xl bg-dark",
-          "dark:bg-light"
+          "absolute top-2 -right-2 -z-10 w-[100%] h-[100%] bg-dark",
+          "dark:bg-light",
+          "md:top-1 md:-right-1"
         )}
       />
       <Link
         href={link}
         target="_blank"
-        className="w-full cursor-pointer overflow-hidden rounded-lg"
+        className="w-full cursor-pointer overflow-hidden"
       >
         <FramerImage
           whileHover={{ scale: 1.05 }}

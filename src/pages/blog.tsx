@@ -15,7 +15,10 @@ const Blog = () => {
       </Head>
       <main className="w-full mb-16 flex flex-col items-center justify-center overflow-hidden">
         <Layout className="pt-16">
-          <AnimatedText text="Words can change the world!" className="mb-16" />
+          <AnimatedText
+            text="Words can change the world!"
+            className={classNames("mb-16")}
+          />
           <ul className="grid grid-cols-2 gap-16">
             <FeaturedBlog
               title="Build A Custom Pagination Component In Reactjs From Scratch"
