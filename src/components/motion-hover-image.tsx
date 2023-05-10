@@ -48,7 +48,8 @@ const MotionHoverImage: React.FC<MotionHoverImageProps> = ({
         className={classNames(
           "capitalize text-dark decoration-dark text-xl font-semibold",
           "hover:underline",
-          "dark:text-light dark:decoration:light"
+          "dark:text-light dark:decoration:light",
+          "lg:text-lg md:text-base"
         )}
       >
         {title}

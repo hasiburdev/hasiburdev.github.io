@@ -56,7 +56,8 @@ const FeaturedBlog: React.FC<FeaturedBlogProps> = ({
           className={classNames(
             "capitalize mt-4 text-2xl text-dark font-bold my-2 underline-offset-2",
             "hover:underline",
-            "dark:text-light"
+            "dark:text-light",
+            "xs:text-lg md:text-xl"
           )}
         >
           {title}

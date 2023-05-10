@@ -17,9 +17,14 @@ const Blog = () => {
         <Layout className="pt-16">
           <AnimatedText
             text="Words can change the world!"
-            className={classNames("mb-16")}
+            className={classNames(
+              "mb-16",
+              "lg:text-6xl md:text-5xl sm:mb-8 sm:text-4xl xs:text-3xl"
+            )}
           />
-          <ul className="grid grid-cols-2 gap-16">
+          <ul
+            className={classNames("grid grid-cols-2 gap-16", "md:grid-cols-1")}
+          >
             <FeaturedBlog
               title="Build A Custom Pagination Component In Reactjs From Scratch"
               image={jsbookImage}
