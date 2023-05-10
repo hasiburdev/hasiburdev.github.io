@@ -2,12 +2,45 @@ import AnimatedText from "@/components/animated-text";
 import FeaturedProject from "@/components/featured-project";
 import Layout from "@/components/layout";
 import Head from "next/head";
-import { jsbookImage } from "@/assets/images";
-import Project from "@/components/project";
+import SingleProject from "@/components/project";
 import classNames from "classnames";
+import { Project } from "@/interfaces";
 import TransitionEffect from "@/components/transition-effect";
+import { GetStaticProps, NextPage } from "next";
 
-const Projects = () => {
+interface ProjectsProps {
+  projects: Project[];
+}
+
+const Projects: NextPage<ProjectsProps> = ({ projects }) => {
+  const renderedProjects = projects.map((project, index) => {
+    if (index === 0)
+      return (
+        <div key={index} className="col-span-12">
+          <FeaturedProject
+            githubLink={project.githubLink}
+            image={project.image}
+            link={project.link}
+            summary={project.summary}
+            title={project.title}
+            type={"website"}
+          />
+        </div>
+      );
+
+    return (
+      <div key={index} className={classNames("col-span-6", "sm:col-span-12")}>
+        <SingleProject
+          githubLink={project.githubLink}
+          image={project.image}
+          link={project.link}
+          summary={project.summary}
+          title={project.title}
+          type={"website"}
+        />
+      </div>
+    );
+  });
   return (
     <>
       <Head>
@@ -30,57 +63,7 @@ const Projects = () => {
               "xl:gap-x-16 lg:gap-x-8 md:gap-y-24 sm:gap-x-2"
             )}
           >
-            <div className="col-span-12">
-              <FeaturedProject
-                githubLink="https://github.com/hasiburdev/jsbook"
-                summary="Lorem ipsum"
-                link="https://jsbook-editor.vercel.app"
-                title="Browser-based JavaScript Runtime"
-                type="website"
-                image={jsbookImage}
-              />
-            </div>
-            <div className={classNames("col-span-6", "sm:col-span-12")}>
-              <Project
-                githubLink="https://github.com/hasiburdev/jsbook"
-                summary="Lorem ipsum"
-                link="https://jsbook-editor.vercel.app"
-                title="Browser-based JavaScript Runtime"
-                type="website"
-                image={jsbookImage}
-              />
-            </div>
-            <div className={classNames("col-span-6", "sm:col-span-12")}>
-              <Project
-                githubLink="https://github.com/hasiburdev/jsbook"
-                summary="Lorem ipsum"
-                link="https://jsbook-editor.vercel.app"
-                title="Browser-based JavaScript Runtime"
-                type="website"
-                image={jsbookImage}
-              />
-            </div>
-
-            <div className={classNames("col-span-6", "sm:col-span-12")}>
-              <Project
-                githubLink="https://github.com/hasiburdev/jsbook"
-                summary="Lorem ipsum"
-                link="https://jsbook-editor.vercel.app"
-                title="Browser-based JavaScript Runtime"
-                type="website"
-                image={jsbookImage}
-              />
-            </div>
-            <div className={classNames("col-span-6", "sm:col-span-12")}>
-              <Project
-                githubLink="https://github.com/hasiburdev/jsbook"
-                summary="Lorem ipsum"
-                link="https://jsbook-editor.vercel.app"
-                title="Browser-based JavaScript Runtime"
-                type="website"
-                image={jsbookImage}
-              />
-            </div>
+            {renderedProjects}
           </div>
         </Layout>
       </main>
@@ -89,3 +72,13 @@ const Projects = () => {
 };
 
 export default Projects;
+
+import { projects } from "../../data";
+
+export const getStaticProps: GetStaticProps<ProjectsProps> = async () => {
+  return {
+    props: {
+      projects,
+    },
+  };
+};
