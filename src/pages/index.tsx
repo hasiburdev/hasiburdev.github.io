@@ -1,18 +1,27 @@
 import Image from "next/image";
 import Layout from "@/components/layout";
-import { profileImage } from "@/assets/images/profile";
 import AnimatedText from "@/components/animated-text";
 import Link from "next/link";
 import { LinkArrow } from "@/components/icons";
 import Head from "next/head";
 import classNames from "classnames";
 import TransitionEffect from "@/components/transition-effect";
+import { GetStaticProps, NextPage } from "next";
+import { HomePageProps } from "@/interfaces/home";
+import { home } from "../../data";
 
-export default function Home() {
+const Home: NextPage<HomePageProps> = ({
+  animatedText,
+  pageTitle,
+  resumeLink,
+  summary,
+  emailAddress,
+  profileImage,
+}) => {
   return (
     <>
       <Head>
-        <title>Hasibur Rahman</title>
+        <title>{pageTitle}</title>
       </Head>
       <TransitionEffect />
       <main
@@ -51,7 +60,7 @@ export default function Home() {
                   "text-start",
                   "xl:text-5xl lg:text-center lg:text-6xl md:text-5xl sm:text-3xl "
                 )}
-                text="Turning Vision Into Reality With Code And Design."
+                text={animatedText}
               />
               <p
                 className={classNames(
@@ -59,10 +68,7 @@ export default function Home() {
                   "lg:text-center md:text-sm"
                 )}
               >
-                As a skilled full-stack developer, I am dedicated to turning
-                ideas into innovative web applications. Explore my latest
-                projects and articles, showcasing my expertise in React.js and
-                web development.
+                {summary}
               </p>
 
               <div
@@ -72,7 +78,7 @@ export default function Home() {
                 )}
               >
                 <Link
-                  href="/resume.pdf"
+                  href={resumeLink}
                   target="_blank"
                   className={classNames(
                     "flex items-center bg-dark text-light py-2.5 px-6 rounded-lg text-lg font-semibold border-2 border-solid border-transparent duration-300",
@@ -86,7 +92,7 @@ export default function Home() {
                   Resume <LinkArrow className="w-6 ml-1 mb-1" />
                 </Link>
                 <Link
-                  href="mailto:hasiburdev@gmail.com"
+                  href={`mailto:${emailAddress}`}
                   target="_blank"
                   className={classNames(
                     "ml-4 text-lg font-medium underline capitalize text-dark",
@@ -103,4 +109,12 @@ export default function Home() {
       </main>
     </>
   );
-}
+};
+
+export default Home;
+
+export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
+  return {
+    props: home,
+  };
+};
