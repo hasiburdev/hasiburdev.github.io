@@ -26,14 +26,14 @@ const Home: NextPage<HomePageProps> = ({
       <TransitionEffect />
       <main
         className={classNames(
-          "flex justify-center items-center",
+          "flex items-center justify-center",
           "dark:text-light"
         )}
       >
         <Layout className={classNames("pt-0", "md:pt-16 sm:pt-8")}>
           <div
             className={classNames(
-              "flex items-center justify-between w-full",
+              "flex w-full items-center justify-between",
               "lg:flex-col"
             )}
           >
@@ -42,7 +42,7 @@ const Home: NextPage<HomePageProps> = ({
                 src={profileImage}
                 alt="Hasibur Rahman"
                 className={classNames(
-                  "w-full h-full",
+                  "h-full w-full",
                   "lg:hidden md:inline-block md:w-full"
                 )}
                 priority={true}
@@ -51,7 +51,7 @@ const Home: NextPage<HomePageProps> = ({
             </div>
             <div
               className={classNames(
-                "w-1/2 flex flex-col items-center self-center",
+                "flex w-1/2 flex-col items-center self-center",
                 "lg:w-full"
               )}
             >
@@ -73,7 +73,7 @@ const Home: NextPage<HomePageProps> = ({
 
               <div
                 className={classNames(
-                  "flex items-center w-full self-start mt-2",
+                  "mt-2 flex w-full items-center self-start",
                   "lg:justify-center"
                 )}
               >
@@ -81,21 +81,21 @@ const Home: NextPage<HomePageProps> = ({
                   href={resumeLink}
                   target="_blank"
                   className={classNames(
-                    "flex items-center bg-dark text-light py-2.5 px-6 rounded-lg text-lg font-semibold border-2 border-solid border-transparent duration-300",
+                    "flex items-center  rounded-lg border-2 border-solid border-transparent bg-dark px-6 py-2.5 text-lg font-semibold text-light duration-300",
                     "dark:bg-light dark:text-dark",
-                    "hover:text-dark hover:bg-light hover:border-dark",
+                    "hover:border-dark hover:bg-light hover:text-dark",
                     "hover:dark:border-light hover:dark:bg-dark hover:dark:text-light",
-                    "md:py-2 md:px-4 md:text-base"
+                    "md:px-4 md:py-2 md:text-base"
                   )}
                   download={true}
                 >
-                  Resume <LinkArrow className="w-6 ml-1 mb-1" />
+                  Resume <LinkArrow className="mb-1 ml-1 w-6" />
                 </Link>
                 <Link
                   href={`mailto:${emailAddress}`}
                   target="_blank"
                   className={classNames(
-                    "ml-4 text-lg font-medium underline capitalize text-dark",
+                    "ml-4 text-lg font-medium capitalize text-dark underline",
                     "dark:text-light",
                     "md:text-base"
                   )}
