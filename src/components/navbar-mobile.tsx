@@ -28,11 +28,11 @@ const NavbarMobile: React.FC<NavbarMobileProps> = ({ handleClose }) => {
         opacity: 1,
       }}
       className={classNames(
-        "min-w-[70vw] flex flex-col justify-between z-30 items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-dark/90 rounded-lg backdrop-blur-sm py-32",
+        "fixed left-1/2 top-1/2 z-30 flex min-w-[70vw] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-between rounded-lg bg-dark/90 py-32 backdrop-blur-sm",
         "dark:bg-light/75 "
       )}
     >
-      <nav className="flex flex-col items-center justify-center py-6 gap-2">
+      <nav className="flex flex-col items-center justify-center gap-2 py-6">
         <NavLinkMobile href="/" title="Home" handleClose={handleClose} />
         <NavLinkMobile href="/about" title="About" handleClose={handleClose} />
         <NavLinkMobile
@@ -40,9 +40,9 @@ const NavbarMobile: React.FC<NavbarMobileProps> = ({ handleClose }) => {
           title="Projects"
           handleClose={handleClose}
         />
-        <NavLinkMobile href="/blog" title="Blog" handleClose={handleClose} />
+        {/* <NavLinkMobile href="/blog" title="Blog" handleClose={handleClose} /> */}
       </nav>
-      <nav className="flex items-center justify-center flex-wrap">
+      <nav className="flex flex-wrap items-center justify-center">
         <motion.a
           whileHover={{
             y: -2,
@@ -50,7 +50,7 @@ const NavbarMobile: React.FC<NavbarMobileProps> = ({ handleClose }) => {
           whileTap={{
             scale: 0.9,
           }}
-          className="w-6 mr-3"
+          className="mr-3 w-6"
           href="https://twitter.com/hasiburdev"
           target="_blank"
         >
@@ -64,7 +64,7 @@ const NavbarMobile: React.FC<NavbarMobileProps> = ({ handleClose }) => {
             scale: 0.9,
           }}
           className={classNames(
-            "w-6 mx-3 bg-light rounded-full",
+            "mx-3 w-6 rounded-full bg-light",
             "dark:bg-dark"
           )}
           href="https://github.com/hasiburdev"
@@ -79,7 +79,7 @@ const NavbarMobile: React.FC<NavbarMobileProps> = ({ handleClose }) => {
           whileTap={{
             scale: 0.9,
           }}
-          className="w-6 mx-3"
+          className="mx-3 w-6"
           href="/"
           target="_blank"
         >
@@ -88,7 +88,7 @@ const NavbarMobile: React.FC<NavbarMobileProps> = ({ handleClose }) => {
 
         <button
           className={classNames(
-            "ml-3 p-1 flex items-center justify-center rounded-full",
+            "ml-3 flex items-center justify-center rounded-full p-1",
             mode === "dark" ? "bg-light text-dark" : "bg-dark text-light"
           )}
           onClick={() =>
