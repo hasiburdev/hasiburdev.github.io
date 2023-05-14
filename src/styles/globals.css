@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* .skill {
+  color: red;
+  animation: round-spin 3s linear infinite;
+  transform-origin: top left;
+  transform: translateX(50px);
+}
+
+@keyframes round-spin {
+  0% {
+    transform: translateX(50px) rotate(0deg);
+  }
+  100% {
+    transform: translateX(50px) rotate(360deg);
+  }
+} */

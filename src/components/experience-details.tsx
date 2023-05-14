@@ -24,7 +24,7 @@ const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
     <li
       ref={liRef}
       className={classNames(
-        "my-8 first:mt-0 last:mb-0 w-[60%] mx-auto flex flex-col items-center justify-between",
+        "mx-auto my-8 flex w-[60%] flex-col items-start justify-between first:mt-0 last:mb-0",
         "md:w-[80%]"
       )}
     >
@@ -46,7 +46,7 @@ const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
       >
         <h3
           className={classNames(
-            "capitalize font-bold text-2xl text-dark",
+            "text-2xl font-bold capitalize text-dark",
             "dark:text-light",
             "sm:text-xl xs:text-lg"
           )}
@@ -55,13 +55,13 @@ const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
         </h3>
         <span
           className={classNames(
-            "capitalize font-medium text-dark/75",
+            "font-medium capitalize italic text-dark/75",
             "dark:text-light/75"
           )}
         >
           {time} | {address}
         </span>
-        <p className="font-medium w-full mt-2">{work}</p>
+        <p className="mt-2 w-full font-medium">{work}</p>
       </motion.div>
     </li>
   );

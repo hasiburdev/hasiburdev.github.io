@@ -1,8 +1,7 @@
-import { useRef } from "react";
-import ExperienceDetails from "./experience-details";
-import { useScroll, motion } from "framer-motion";
-import EducationDetails from "./education-details";
 import classNames from "classnames";
+import { motion, useScroll } from "framer-motion";
+import { useRef } from "react";
+import EducationDetails from "./education-details";
 
 const Education = () => {
   const ref = useRef(null);
@@ -11,18 +10,18 @@ const Education = () => {
     offset: ["start end", "center start"],
   });
   return (
-    <div className={classNames("my-64", "md:my-32 sm:my-24 xs:my-20")}>
+    <div className={classNames("mb-32 mt-64", "md:my-32 sm:my-24 xs:my-20")}>
       <h2
         className={classNames(
-          "font-bold text-6xl mb-24 w-full text-center",
-          "md:text-5xl md:mb-16 sm:4xl xs:3xl"
+          "mb-24 w-full text-center text-6xl font-bold",
+          "sm:4xl xs:3xl md:mb-16 md:text-5xl"
         )}
       >
         Education
       </h2>
       <div
         className={classNames(
-          "w-3/4 mx-auto relative",
+          "relative mx-auto w-3/4",
           "lg:w-[85%] md:w-[90%] sm:w-full"
         )}
       >
@@ -32,22 +31,28 @@ const Education = () => {
             scaleY: scrollYProgress,
           }}
           className={classNames(
-            "absolute left-0 top-[2px] w-[4px] h-full bg-dark origin-top",
+            "absolute left-0 top-[2px] h-full w-[4px] origin-top bg-dark",
             "dark:bg-light"
           )}
         />
-        <ul className="w-full flex flex-col items-start justify-between">
+        <ul className="flex w-full flex-col items-start justify-between">
           <EducationDetails
             type="B.Sc. in Electronics and Communication Engineering"
             time="2021-Present"
             place="Hajee Mohammad Danesh Science and Technology University"
-            info="Courses include Computer Fundamentals, Data Structures, Algorithms, Internet of Things"
+            info=""
           />
           <EducationDetails
-            type="B.Sc. in Electronics and Communication Engineering"
-            time="2021-Present"
-            place="Hajee Mohammad Danesh Science and Technology University"
-            info="Courses include Computer Fundamentals, Data Structures, Algorithms, Internet of Things"
+            type="Higher Secondary School Certificate"
+            time="2018-2020"
+            place="Gazipur Cantonment College"
+            info=""
+          />
+          <EducationDetails
+            type="Secondary School Certificate"
+            time="2016-2018"
+            place="Rajendrapur Cantonment Public School & College"
+            info=""
           />
         </ul>
       </div>

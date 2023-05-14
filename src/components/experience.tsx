@@ -13,15 +13,15 @@ const Experience = () => {
     <div className={classNames("my-64", "md:my-32 sm:my-24 xs:my-20")}>
       <h2
         className={classNames(
-          "font-bold text-6xl mb-24 w-full text-center",
-          "md:text-5xl md:mb-16 sm:4xl xs:3xl"
+          "mb-24 w-full text-center text-6xl font-bold",
+          "sm:4xl xs:3xl md:mb-16 md:text-5xl"
         )}
       >
         Experience
       </h2>
       <div
         className={classNames(
-          "w-3/4 mx-auto relative",
+          "relative mx-auto w-3/4",
           "lg:w-[85%] md:w-[90%] sm:w-full"
         )}
       >
@@ -31,53 +31,34 @@ const Experience = () => {
             scaleY: scrollYProgress,
           }}
           className={classNames(
-            "absolute left-0 top-[2px] w-[4px] h-full bg-dark origin-top",
+            "absolute left-0 top-[2px] h-full w-[4px] origin-top bg-dark",
             "dark:bg-light"
           )}
         />
-        <ul className="w-full flex flex-col items-start justify-between ">
+        <ul className="flex w-full flex-col items-start justify-between ">
           <ExperienceDetails
-            position="Software Engineer"
-            company="Google"
-            companyUrl="https://google.com"
-            time="2022-Present"
-            address="Mountain View, CA"
-            work="Worked on a team responsible for developing new features for Google's 
-search engine, including improving the accuracy and relevance of search results and 
-developing new tools for data analysis and visualization."
+            position="Frontend Developer"
+            company="Fixer IT BD"
+            companyUrl=""
+            time="April,2020-December,2022"
+            address="Dhaka, Bangladesh"
+            work="My role is to develop the product for their company and maintain it. The products I built for this company are Employee Management System, Call Management System, and Student Management System. I am working on a SASS product called the Appointment Booking System."
           />
-
           <ExperienceDetails
-            position="Software Engineer"
-            company="Google"
-            companyUrl="https://google.com"
-            time="2022-Present"
-            address="Mountain View, CA"
-            work="Worked on a team responsible for developing new features for Google's 
-search engine, including improving the accuracy and relevance of search results and 
-developing new tools for data analysis and visualization."
+            position="Full Stack Developer"
+            company="Fiverr"
+            companyUrl=""
+            time="April,2020-Present"
+            address="Dhaka, Bangladesh"
+            work="I have worked with many clients as front-end and back-end developers, providing them with the best way for their websites or applications."
           />
-
           <ExperienceDetails
-            position="Software Engineer"
-            company="Google"
-            companyUrl="https://google.com"
-            time="2022-Present"
-            address="Mountain View, CA"
-            work="Worked on a team responsible for developing new features for Google's 
-search engine, including improving the accuracy and relevance of search results and 
-developing new tools for data analysis and visualization."
-          />
-
-          <ExperienceDetails
-            position="Software Engineer"
-            company="Google"
-            companyUrl="https://google.com"
-            time="2022-Present"
-            address="Mountain View, CA"
-            work="Worked on a team responsible for developing new features for Google's 
-search engine, including improving the accuracy and relevance of search results and 
-developing new tools for data analysis and visualization."
+            position="Frontend Developer"
+            company="Team Work"
+            companyUrl=""
+            time="April,2022-Present"
+            address="Dhaka, Bangladesh"
+            work="I have worked on some teamwork projects. My role was to create the best user experience with redux or more complicated tasks. Also, I worked with react next js and React another framework Hydrozen with Shopify + Mongo DB"
           />
         </ul>
       </div>

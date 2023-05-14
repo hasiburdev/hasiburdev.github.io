@@ -4,7 +4,7 @@ import AnimatedText from "@/components/animated-text";
 import Education from "@/components/education";
 import Experience from "@/components/experience";
 import Layout from "@/components/layout";
-import Skills from "@/components/skills";
+import Skills from "@/components/skill-circle";
 import TransitionEffect from "@/components/transition-effect";
 import classNames from "classnames";
 import Head from "next/head";
@@ -53,42 +53,54 @@ const About = () => {
                 Biography
               </h2>
               <p className="font-medium ">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Maiores id aut vel deserunt odio tempore eos obcaecati
-                perspiciatis. Sit corrupti exercitationem quod veritatis modi id
-                alias minus temporibus, inventore eos?
+                Software development is not only my choice career but also it’s
+                my hobby and passion. I have 3+ years of experience in Full
+                stack web development.
               </p>
               <p className="my-4 font-medium ">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Maiores id aut vel deserunt odio tempore eos obcaecati
-                perspiciatis. Sit corrupti exercitationem quod veritatis modi id
-                alias minus temporibus, inventore eos?
+                I have worked on projects like: Online JavaScript Code Runner,
+                Project Management Software, Ecommerce Website.
               </p>
-              <p className="font-medium ">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Maiores id aut vel deserunt odio tempore eos obcaecati
-                perspiciatis. Sit corrupti exercitationem quod veritatis modi id
-                alias minus temporibus, inventore eos?
-              </p>
+              <div className="font-medium  ">
+                Technologies I use frequently:
+                <p className="mt-2">
+                  <strong>Frontend:</strong> React.js, Redux, Next.js, Sass,
+                  TailwindCSS, Material UI, Bootstrap, Ant Design <br />
+                </p>
+                <p className="mt-2">
+                  <strong>Backend:</strong>
+                  Node.js, Express.js, Prisma, Nest.js, MongoDB, Postgresql{" "}
+                  <br />
+                </p>
+                <p className="my-2">
+                  <strong>Tools:</strong>
+                  Git, GitHub, Linux Server, Postman, Figma, Adobe XD <br />{" "}
+                </p>
+                <p>
+                  I am always seeking opportunities to learn and develop my
+                  skills as a professional in a challenging and dynamic work
+                  environment.
+                </p>
+              </div>
             </div>
             <div
               className={classNames(
-                "col-span-3 relative h-max border-2 border-solid border-dark bg-light p-8",
-                "dark:bg-dark dark:border-light",
+                "relative col-span-3 h-max border-2 border-solid border-dark bg-light p-8",
+                "dark:border-light dark:bg-dark",
                 "xl:col-span-4",
                 "md:order-1 md:col-span-8"
               )}
             >
               <div
                 className={classNames(
-                  "absolute top-0 -right-2 -z-10 w-[102%] h-[102%] bg-dark",
+                  "absolute -right-2 top-0 -z-10 h-[102%] w-[102%] bg-dark",
                   "dark:bg-light"
                 )}
               />
               <Image
                 src={profileImageAbout}
                 alt="Hasibur Rahman"
-                className="w-full h-auto"
+                className="h-auto w-full"
                 priority={true}
                 sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
               />
@@ -116,7 +128,7 @@ const About = () => {
                 </span>
                 <h2
                   className={classNames(
-                    "text-xl font-medium capitalize text-dark/75 text-center",
+                    "text-center text-xl font-medium capitalize text-dark/75",
                     "dark:text-light/75",
                     "md:text-lg sm:text-base xs:text-sm"
                   )}
@@ -140,7 +152,7 @@ const About = () => {
                 </span>
                 <h2
                   className={classNames(
-                    "text-xl font-medium capitalize text-dark/75 text-center",
+                    "text-center text-xl font-medium capitalize text-dark/75",
                     "dark:text-light/75",
                     "md:text-lg sm:text-base xs:text-sm"
                   )}
@@ -164,7 +176,7 @@ const About = () => {
                 </span>
                 <h2
                   className={classNames(
-                    "text-xl font-medium capitalize text-dark/75 text-center",
+                    "text-center text-xl font-medium capitalize text-dark/75",
                     "dark:text-light/75",
                     "md:text-lg sm:text-base xs:text-sm"
                   )}
