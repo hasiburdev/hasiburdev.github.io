@@ -4,7 +4,7 @@ import AnimatedText from "@/components/animated-text";
 import Education from "@/components/education";
 import Experience from "@/components/experience";
 import Layout from "@/components/layout";
-import Skills from "@/components/skill-circle";
+import Skills from "@/components/skills";
 import TransitionEffect from "@/components/transition-effect";
 import classNames from "classnames";
 import Head from "next/head";

@@ -20,6 +20,9 @@ module.exports = {
       },
       animation: {
         "spin-slow": "spin 8s linear infinite",
+        "spin-reverse": "spin-reverse 8s linear infinite",
+        "spin-skill-slow": "spin 32s linear infinite",
+        "spin-skill-reverse": "spin-reverse 32s linear infinite",
       },
       backgroundImage: {
         "circular-light":
