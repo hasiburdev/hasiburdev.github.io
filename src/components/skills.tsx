@@ -17,21 +17,24 @@ const Skills = () => {
       >
         Skills
       </h2>
-      <div
-        className={classNames(
-          "relative flex aspect-square w-1/2 max-w-[500px] items-center justify-center rounded-full rounded-full border border-dashed border-dark ",
-          "dark:border-light",
-          "animate-spin-skill-slow"
-        )}
-      >
-        <Skill icon={"html"} ml={-50} mt={0} />
-        <Skill ml={50} mt={0} icon="css" />
-        <Skill ml={0} mt={50} icon="js" />
-        <Skill ml={-35} mt={-37} icon="linux" />
-        <Skill ml={35} mt={-37} icon="react" />
-        <Skill ml={35} mt={37} icon="nodejs" />
-        <Skill ml={-35} mt={37} icon="sass" />
-        <Skill ml={0} mt={-50} icon="ts" />
+      <div className="place-center grid aspect-square w-1/2 grid-cols-1 grid-rows-1">
+        {/* <h3>Web</h3> */}
+        <div
+          className={classNames(
+            "relative flex aspect-square w-full max-w-[500px]  items-center justify-center rounded-full rounded-full border border-dashed border-dark ",
+            "dark:border-light",
+            "animate-spin-skill-slow"
+          )}
+        >
+          <Skill icon={"html"} ml={-50} mt={0} />
+          <Skill ml={50} mt={0} icon="css" />
+          <Skill ml={0} mt={50} icon="js" />
+          <Skill ml={-35} mt={-37} icon="linux" />
+          <Skill ml={35} mt={-37} icon="react" />
+          <Skill ml={35} mt={37} icon="nodejs" />
+          <Skill ml={-35} mt={37} icon="sass" />
+          <Skill ml={0} mt={-50} icon="ts" />
+        </div>
       </div>
     </div>
   );
