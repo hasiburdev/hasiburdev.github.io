@@ -10,7 +10,7 @@ const Experience = () => {
     offset: ["start end", "center start"],
   });
   return (
-    <div className={classNames("my-64", "md:my-32 sm:my-24 xs:my-20")}>
+    <div className={classNames("my-5", "md:my-32 sm:my-24 xs:my-20")}>
       <h2
         className={classNames(
           "mb-24 w-full text-center text-6xl font-bold",

@@ -8,7 +8,7 @@ export const TwitterIcon: React.FC<IconProps> = ({ className, ...rest }) => {
       width="1.23em"
       height="1em"
       viewBox="0 0 256 209"
-      className={classNames("w-full h-auto", className)}
+      className={classNames("h-auto w-full", className)}
       {...rest}
     >
       <rect

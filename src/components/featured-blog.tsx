@@ -23,15 +23,15 @@ const FeaturedBlog: React.FC<FeaturedBlogProps> = ({
   return (
     <li
       className={classNames(
-        "relative col-span-1 w-full p-4 bg-light border border-solid border-dark",
+        "relative col-span-1 w-full border border-solid border-dark bg-light p-4",
         "dark:border-light dark:bg-dark"
       )}
     >
       <div
         className={classNames(
-          "absolute top-2 -right-2 -z-10 w-[100%] h-[100%] bg-dark",
+          "absolute -right-2 top-2 -z-10 h-[100%] w-[100%] bg-dark",
           "dark:bg-light",
-          "md:top-1 md:-right-1"
+          "md:-right-1 md:top-1"
         )}
       />
       <Link
@@ -46,7 +46,7 @@ const FeaturedBlog: React.FC<FeaturedBlogProps> = ({
           }}
           src={image}
           alt={title}
-          className="w-full h-auto"
+          className="h-auto w-full"
           priority={true}
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 50vw"
         />
@@ -54,21 +54,21 @@ const FeaturedBlog: React.FC<FeaturedBlogProps> = ({
       <Link href={link} target="_blank">
         <h2
           className={classNames(
-            "capitalize mt-4 text-2xl text-dark font-bold my-2 underline-offset-2",
+            "my-2 mt-4 text-2xl font-bold capitalize text-dark underline-offset-2",
             "hover:underline",
             "dark:text-light",
-            "xs:text-lg md:text-xl"
+            "md:text-xl xs:text-lg"
           )}
         >
           {title}
         </h2>
       </Link>
-      <p className={classNames("text-sm text-dark mb-2", "dark:text-light")}>
+      <p className={classNames("mb-2 text-sm text-dark", "dark:text-light")}>
         {summary}
       </p>
       <span
         className={classNames(
-          "text-primary font-semibold",
+          "font-semibold text-primary",
           "dark:text-primary-dark"
         )}
       >

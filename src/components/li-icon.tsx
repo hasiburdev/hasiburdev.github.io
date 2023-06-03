@@ -22,14 +22,14 @@ const LiIcon: React.FC<LiIconProps> = ({ reference }) => {
         width="75"
         height="75"
         viewBox="0 0 100 100"
-        className="-rotate-90 absolute left-0"
+        className="absolute left-0 -rotate-90"
       >
         <circle
           cx="75"
           cy="50"
           r="20"
           className={classNames(
-            "stroke-primary stroke-1 fill-none",
+            "fill-none stroke-primary stroke-1",
             "dark:stroke-primary-dark"
           )}
         />
@@ -40,14 +40,14 @@ const LiIcon: React.FC<LiIconProps> = ({ reference }) => {
           cx="75"
           cy="50"
           r="20"
-          className={classNames("stroke-[5px] fill-light", "dark:fill-dark")}
+          className={classNames("fill-light stroke-[5px]", "dark:fill-dark")}
         />
         <circle
           cx="75"
           cy="50"
           r="10"
           className={classNames(
-            "stroke-1 fill-primary animate-pulse",
+            "animate-pulse fill-primary stroke-1",
             "dark:fill-primary-dark"
           )}
         />

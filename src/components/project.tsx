@@ -22,14 +22,14 @@ const Project: React.FC<ProjectProps> = ({
 }) => (
   <article
     className={classNames(
-      "w-full flex items-center justify-center border border-solid border-dark bg-light relative p-6 flex-col",
-      "dark:bg-dark dark:border-light",
+      "relative flex w-full flex-col items-center justify-center border border-solid border-dark bg-light p-6",
+      "dark:border-light dark:bg-dark",
       "lg:p-4 md:p-4 sm:p-3 xs:p-2"
     )}
   >
     <div
       className={classNames(
-        "absolute top-1 -right-1 -z-10 w-[100%] h-[100%] bg-dark",
+        "absolute -right-1 top-1 -z-10 h-[100%] w-[100%] bg-dark",
         "dark:bg-light"
       )}
     />
@@ -41,15 +41,15 @@ const Project: React.FC<ProjectProps> = ({
       <Image
         src={image}
         alt={title}
-        className="w-full h-auto"
+        className="h-auto w-full"
         priority={true}
         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 50vw"
       />
     </Link>
-    <div className="w-full flex flex-col items-start justify-between mt-4">
+    <div className="mt-4 flex w-full flex-col items-start justify-between">
       <span
         className={classNames(
-          "text-primary font-medium text-xl",
+          "text-xl font-medium text-primary",
           "dark:text-primary-dark",
           "md:text-base xs:text-sm"
         )}
@@ -80,12 +80,12 @@ const Project: React.FC<ProjectProps> = ({
       >
         {summary}
       </p>
-      <div className="mt-2 flex items-center justify-between w-full">
+      <div className="mt-2 flex w-full items-center justify-between">
         <Link
           href={link}
           target="_blank"
           className={classNames(
-            "underline py-2 px-0 text-lg font-semibold text-dark",
+            "px-0 py-2 text-lg font-semibold text-dark underline",
             "dark:text-light"
           )}
         >

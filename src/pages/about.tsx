@@ -33,7 +33,7 @@ const About = () => {
           />
           <div
             className={classNames(
-              "grid w-full grid-cols-8 gap-16 ",
+              "grid w-full grid-cols-8 items-center gap-16",
               "sm:gap-8 "
             )}
           >
@@ -85,15 +85,15 @@ const About = () => {
             </div>
             <div
               className={classNames(
-                "relative col-span-3 h-max border-2 border-solid border-dark bg-light p-8",
-                "dark:border-light dark:bg-dark",
+                "relative col-span-3 max-w-[600px] bg-light p-8",
+                "dark:bg-dark",
                 "xl:col-span-4",
                 "md:order-1 md:col-span-8"
               )}
             >
               <div
                 className={classNames(
-                  "absolute -right-2 top-0 -z-10 h-[102%] w-[102%] bg-dark",
+                  "absolute -right-2 top-0 -z-10 bg-dark",
                   "dark:bg-light"
                 )}
               />
@@ -114,7 +114,7 @@ const About = () => {
             >
               <div
                 className={classNames(
-                  "flex flex-col items-end justify-center",
+                  "my-[50px] flex flex-col items-end justify-center",
                   "xl:items-center"
                 )}
               >
@@ -138,7 +138,7 @@ const About = () => {
               </div>
               <div
                 className={classNames(
-                  "flex flex-col items-end justify-center",
+                  "my-[50px] flex flex-col items-end  justify-center",
                   "xl:items-center"
                 )}
               >
@@ -162,7 +162,7 @@ const About = () => {
               </div>
               <div
                 className={classNames(
-                  "flex flex-col items-end justify-center",
+                  "my-[50px] flex flex-col items-end  justify-center",
                   "xl:items-center"
                 )}
               >

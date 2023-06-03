@@ -46,9 +46,9 @@ const MotionHoverImage: React.FC<MotionHoverImageProps> = ({
     >
       <h2
         className={classNames(
-          "capitalize text-dark decoration-dark text-xl font-semibold",
+          "text-xl font-semibold capitalize text-dark decoration-dark",
           "hover:underline",
-          "dark:text-light dark:decoration:light",
+          "dark:decoration:light dark:text-light",
           "lg:text-lg md:text-base"
         )}
       >
@@ -71,7 +71,7 @@ const MotionHoverImage: React.FC<MotionHoverImageProps> = ({
         ref={imageRef}
         src={image}
         alt={title}
-        className="z-10 w-96 h-auto absolute rounded-lg hidden"
+        className="absolute z-10 hidden h-auto w-96 rounded-lg"
         priority={true}
         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 50vw"
       />

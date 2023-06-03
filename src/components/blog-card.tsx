@@ -24,21 +24,21 @@ const BlogCard: React.FC<BlogCardProps> = ({ image, title, date, link }) => {
       }}
       viewport={{ once: true }}
       className={classNames(
-        "relative w-full px-4 py-6 my-4  flex items-center justify-between bg-light text-dark first:mt-0 border border-solid border-dark ",
-        "dark:bg-dark dark:border-light dark:text-light",
-        "md:flex-col md:items-start md:py-4 md:px-3 sm:py-3 sm:px-2"
+        "relative my-4 flex w-full items-center  justify-between border border-solid border-dark bg-light px-4 py-6 text-dark first:mt-0 ",
+        "dark:border-light dark:bg-dark dark:text-light",
+        "md:flex-col md:items-start md:px-3 md:py-4 sm:px-2 sm:py-3"
       )}
     >
       <div
         className={classNames(
-          "absolute top-1 -right-1 -z-10 w-[100%] h-[100%] bg-dark",
+          "absolute -right-1 top-1 -z-10 h-[100%] w-[100%] bg-dark",
           "dark:bg-light"
         )}
       />
       <MotionHoverImage title={title} link={link} image={image} />
       <span
         className={classNames(
-          "text-primary font-semibold pl-4",
+          "pl-4 font-semibold text-primary",
           "dark:text-primary-dark",
           "md:pl-0 md:pt-2 sm:pt-1"
         )}

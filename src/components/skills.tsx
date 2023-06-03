@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import Skill from "./skill";
+import Logo from "./logo";
 
 const Skills = () => {
   return (
@@ -18,14 +19,41 @@ const Skills = () => {
         Skills
       </h2>
       <div className="place-center grid aspect-square w-1/2 grid-cols-1 grid-rows-1">
-        {/* <h3>Web</h3> */}
         <div
           className={classNames(
-            "relative flex aspect-square w-full max-w-[500px]  items-center justify-center rounded-full rounded-full border border-dashed border-dark ",
+            "relative mx-auto flex aspect-square w-full max-w-[600px]  items-center justify-center rounded-full rounded-full border border-dashed border-dark ",
             "dark:border-light",
             "animate-spin-skill-slow"
           )}
         >
+          <div
+            className={classNames(
+              "h-[450px] w-[450px]",
+              "bg-white",
+              "flex items-center justify-center rounded-full"
+            )}
+          >
+            <div
+              className={classNames(
+                "h-[350px] w-[350px]",
+                "bg-white shadow-[0_0px_30px_-15px_rgba(0,0,0,0.3)]",
+                "flex items-center justify-center",
+                "rounded-full"
+              )}
+            >
+              <div
+                className={classNames(
+                  "h-[250px] w-[250px]",
+                  "animate-spin-skill-reverse",
+                  "bg-white shadow-[0_0px_30px_-15px_rgba(0,0,0,0.3)]",
+                  "flex items-center justify-center",
+                  "rounded-full"
+                )}
+              >
+                <Logo />
+              </div>
+            </div>
+          </div>
           <Skill icon={"html"} ml={-50} mt={0} />
           <Skill ml={50} mt={0} icon="css" />
           <Skill ml={0} mt={50} icon="js" />

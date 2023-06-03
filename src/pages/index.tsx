@@ -58,14 +58,14 @@ const Home: NextPage<HomePageProps> = ({
               <AnimatedText
                 className={classNames(
                   "text-start",
-                  "xl:text-5xl lg:text-center lg:text-6xl md:text-5xl sm:text-3xl "
+                  "leading-[90px] xl:text-5xl xl:leading-[70px] lg:text-center lg:text-6xl lg:leading-[80px] md:text-5xl md:leading-[60px] sm:text-3xl"
                 )}
                 text={animatedText}
               />
               <p
                 className={classNames(
                   "my-4 text-base font-medium",
-                  "lg:text-center md:text-sm"
+                  "leading-[40px] lg:text-center md:text-sm"
                 )}
               >
                 {summary}

@@ -6,17 +6,17 @@ const MotionLink = motion(Link);
 
 const Logo = () => {
   return (
-    <div className="flex items-center justify-center m-2 relative">
+    <div className="relative m-2 flex items-center justify-center">
       <div
         className={classNames(
-          "absolute top-1 -right-1 -z-10 w-[100%] h-[102%] rounded-sm bg-dark",
+          "absolute -right-1 top-1 -z-10 h-[102%] w-[100%] rounded-sm bg-dark",
           "dark:bg-light"
         )}
       />
       <MotionLink
         className={classNames(
-          "border capitalize border-solid border-dark p-1 rounded-sm bg-light text-dark flex items-center justify-center  text-2xl font-bold",
-          "dark:border-light dark:text-light dark:bg-dark"
+          "flex items-center justify-center rounded-sm border border-solid border-dark bg-light p-1 text-2xl font-bold  capitalize text-dark",
+          "dark:border-light dark:bg-dark dark:text-light"
         )}
         href="/"
       >

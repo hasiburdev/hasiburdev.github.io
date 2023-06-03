@@ -46,7 +46,7 @@ const Blog: NextPage<BlogPageProps> = ({
         <meta name="description" content={metaDescription} />
       </Head>
       <TransitionEffect />
-      <main className="w-full mb-16 flex flex-col items-center justify-center overflow-hidden">
+      <main className="mb-16 flex w-full flex-col items-center justify-center overflow-hidden">
         <Layout className="pt-16">
           <AnimatedText
             text={animatedText}
@@ -62,7 +62,7 @@ const Blog: NextPage<BlogPageProps> = ({
           </ul>
           <h2
             className={classNames(
-              "font-bold text-4xl w-full text-center my-16 mt-32 text-dark",
+              "my-16 mt-32 w-full text-center text-4xl font-bold text-dark",
               "dark:text-light"
             )}
           >

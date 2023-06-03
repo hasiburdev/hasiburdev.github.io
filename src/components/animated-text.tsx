@@ -37,7 +37,7 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({ text, className }) => {
   return (
     <div
       className={classNames(
-        "mx-auto py-2 flex items-center justify-center text-center w-full overflow-hidden",
+        "mx-auto flex w-full items-center justify-center overflow-hidden py-2 text-center",
         "sm:py-0"
       )}
     >
@@ -47,7 +47,7 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({ text, className }) => {
         animate="animate"
         className={classNames(
           className,
-          "inline-block w-full text-dark font-bold capitalize text-6xl",
+          "inline-block w-full text-6xl font-bold capitalize text-dark",
           "dark:text-light"
         )}
       >

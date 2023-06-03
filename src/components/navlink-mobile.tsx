@@ -24,14 +24,14 @@ const NavLinkMobile: React.FC<NavLinkMobileProps> = ({
       onClick={handleClick}
       className={classNames(
         className,
-        "relative group text-light",
+        "group relative text-light",
         "dark:text-dark"
       )}
     >
       {title}
       <span
         className={classNames(
-          "h-[1px] inline-block bg-light absolute left-0 -bottom-0.5 transition-[width] ease-in-out duration-300",
+          "absolute -bottom-0.5 left-0 inline-block h-[1px] bg-light transition-[width] duration-300 ease-in-out",
           router.asPath === href ? "w-full" : "w-0",
           "dark:bg-dark",
           "group-hover:w-full"

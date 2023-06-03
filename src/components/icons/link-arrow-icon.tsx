@@ -8,7 +8,7 @@ export const LinkArrow: React.FC<IconProps> = ({ className, ...rest }) => {
       width={24}
       height={24}
       viewBox="0 0 24 24"
-      className={`w-full h-auto ${className}`}
+      className={`h-auto w-full ${className}`}
       {...rest}
     >
       <path fill="none" d="M0 0h24v24H0z" />

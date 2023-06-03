@@ -10,7 +10,7 @@ export const SunIcon: React.FC<IconProps> = ({ className, ...rest }) => {
       height="24"
       viewBox="0 0 24 24"
       {...rest}
-      className={classNames("w-full h-auto", className)}
+      className={classNames("h-auto w-full", className)}
     >
       <g
         fill="none"

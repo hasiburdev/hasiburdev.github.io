@@ -23,14 +23,14 @@ const FeaturedProject: React.FC<FeaturedProjectProps> = ({
   return (
     <article
       className={classNames(
-        "w-full flex items-center justify-between border border-solid border-dark bg-light shadow-2xl p-12 relative",
+        "relative flex w-full items-center justify-between border border-solid border-dark bg-light p-12 shadow-2xl",
         "dark:border-light dark:bg-dark",
         "lg:p-8 md:flex-col md:p-8 sm:p-6 xs:p-4"
       )}
     >
       <div
         className={classNames(
-          "absolute top-2 -right-2 -z-10 w-[100%] h-[100%] bg-dark",
+          "absolute -right-2 top-2 -z-10 h-[100%] w-[100%] bg-dark",
           "dark:bg-light"
         )}
       />
@@ -45,20 +45,20 @@ const FeaturedProject: React.FC<FeaturedProjectProps> = ({
         <Image
           src={image}
           alt={title}
-          className="w-full h-auto"
+          className="h-auto w-full"
           priority={true}
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 50vw"
         />
       </Link>
       <div
         className={classNames(
-          "w-1/2 flex flex-col items-start justify-between pl-6",
+          "flex w-1/2 flex-col items-start justify-between pl-6",
           "md:w-full md:pl-0 md:pt-4"
         )}
       >
         <span
           className={classNames(
-            "text-primary font-medium text-xl",
+            "text-xl font-medium text-primary",
             "dark:text-primary-dark",
             "md:text-base xs:text-sm"
           )}
@@ -114,11 +114,11 @@ const FeaturedProject: React.FC<FeaturedProjectProps> = ({
             href={link}
             target="_blank"
             className={classNames(
-              "ml-4 rounded-lg bg-dark text-light border border-solid ease-in-out duration-300 border-transparent py-2 px-6 text-lg font-semibold",
-              "hover:text-dark hover:bg-light hover:border-dark",
-              "dark:text-dark dark:bg-light dark:border-transparent",
-              "dark:hover:text-light dark:hover:bg-dark dark:hover:border-light",
-              "md:order-1 md:ml-0 md:py-1.5 md:text-base md:px-3"
+              "ml-4 rounded-lg border border-solid border-transparent bg-dark px-6 py-2 text-lg font-semibold text-light duration-300 ease-in-out",
+              "hover:border-dark hover:bg-light hover:text-dark",
+              "dark:border-transparent dark:bg-light dark:text-dark",
+              "dark:hover:border-light dark:hover:bg-dark dark:hover:text-light",
+              "md:order-1 md:ml-0 md:px-3 md:py-1.5 md:text-base"
             )}
           >
             Visit Project

@@ -12,11 +12,11 @@ interface NavLinkProps {
 const NavLink: React.FC<NavLinkProps> = ({ title, href, className = "" }) => {
   const router = useRouter();
   return (
-    <Link href={href} className={`${className} relative group`}>
+    <Link href={href} className={`${className} group relative`}>
       {title}
       <span
         className={classNames(
-          "h-[1px] inline-block bg-dark absolute left-0 -bottom-0.5 transition-[width] ease-in-out duration-300",
+          "absolute -bottom-0.5 left-0 inline-block h-[1px] bg-dark transition-[width] duration-300 ease-in-out",
           router.asPath === href ? "w-full" : "w-0",
           "dark:bg-light",
           "group-hover:w-full "

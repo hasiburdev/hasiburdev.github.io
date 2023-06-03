@@ -9,7 +9,7 @@ export const LinkedInIcon: React.FC<IconProps> = ({ className, ...rest }) => {
       height="1em"
       viewBox="0 0 256 256"
       {...rest}
-      className={classNames("w-full h-auto", className)}
+      className={classNames("h-auto w-full", className)}
     >
       <path fill="none" d="M0 0h256v256H0z" />
       <g fill="none">

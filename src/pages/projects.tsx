@@ -50,7 +50,7 @@ const Projects: NextPage<ProjectPageProps> = ({
         <meta name="description" content={metaDescription} />
       </Head>
       <TransitionEffect />
-      <main className="w-full mb-16 flex flex-col items-center justify-center">
+      <main className="mb-16 flex w-full flex-col items-center justify-center">
         <Layout className="pt-16">
           <AnimatedText
             text={animatedText}

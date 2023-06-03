@@ -6,14 +6,14 @@ const Footer = () => {
   return (
     <footer
       className={classNames(
-        "w-full border-t-2 border-solid border-dark font-medium text-lg",
-        "dark:text-light dark:border-light",
+        "w-full border-t-2 border-solid border-dark text-lg font-medium",
+        "dark:border-light dark:text-light",
         "sm:text-base"
       )}
     >
       <Layout
         className={classNames(
-          "py-4 flex items-center justify-between",
+          "flex items-center justify-between py-4",
           "lg:flex-col lg:py-2",
           "!2xl:p-8 !xl:pt-[32px] !xl:pb-[32px] !lg:p-4 !md:p-4 !sm:p-4"
         )}
@@ -26,7 +26,7 @@ const Footer = () => {
           Built with{" "}
           <span
             className={classNames(
-              "text-primary text-2xl px-1",
+              "px-1 text-2xl text-primary",
               "dark:text-primary-dark"
             )}
           >
