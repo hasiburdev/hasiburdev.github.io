@@ -10,7 +10,7 @@ const Education = () => {
     offset: ["start end", "center start"],
   });
   return (
-    <div className={classNames("mb-32 mt-64", "md:my-32 sm:my-24 xs:my-20")}>
+    <div className={classNames("mb-32 mt-64", "md:my-32 sm:my-24 xs:my-20 overflow-y-hidden")}>
       <h2
         className={classNames(
           "mb-24 w-full text-center text-6xl font-bold",
@@ -28,7 +28,7 @@ const Education = () => {
         <motion.div
           ref={ref}
           style={{
-            scaleY: scrollYProgress,
+            scaleY: Number(scrollYProgress)*2,
           }}
           className={classNames(
             "absolute left-0 top-[2px] h-full w-[4px] origin-top bg-dark",

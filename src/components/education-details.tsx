@@ -20,7 +20,7 @@ const EducationDetails: React.FC<ExperienceDetailsProps> = ({
     <li
       ref={liRef}
       className={classNames(
-        "mx-auto my-8 flex w-[60%] flex-col items-center justify-between first:mt-0 last:mb-0",
+        "mx-auto my-8 flex w-[60%] flex-col  justify-between first:mt-0 last:mb-0",
         "md:w-[80%]"
       )}
     >

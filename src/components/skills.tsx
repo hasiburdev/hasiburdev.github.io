@@ -28,24 +28,27 @@ const Skills = () => {
         >
           <div
             className={classNames(
-              "h-[450px] w-[450px]",
-              "bg-white",
+              "h-[450px] w-[450px] inner-circle-skill",
+              "bg-[#EFEEEE]",
+              "dark:bg-[#191919] dark:shadow-[0px_0px_70px_rgba(255,255,255,0.1)]",
               "flex items-center justify-center rounded-full"
             )}
           >
             <div
               className={classNames(
-                "h-[350px] w-[350px]",
-                "bg-white shadow-[0_0px_30px_-15px_rgba(0,0,0,0.3)]",
+                "h-[350px] w-[350px] inner-circle-skill",
+                "bg-[#EFEEEE]",
+                "dark:bg-[#191919] dark:shadow-[0px_0px_70px_rgba(255,255,255,0.1)]",
                 "flex items-center justify-center",
                 "rounded-full"
               )}
             >
               <div
                 className={classNames(
-                  "h-[250px] w-[250px]",
+                  "h-[250px] w-[250px] inner-circle-skill",
                   "animate-spin-skill-reverse",
-                  "bg-white shadow-[0_0px_30px_-15px_rgba(0,0,0,0.3)]",
+                  "bg-[#EFEEEE]",
+                  "dark:bg-[#191919] dark:shadow-[0px_0px_70px_rgba(255,255,255,0.1)]",
                   "flex items-center justify-center",
                   "rounded-full"
                 )}
