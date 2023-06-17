@@ -28,7 +28,7 @@ const Skills = () => {
         >
           <div
             className={classNames(
-              "h-[450px] w-[450px] inner-circle-skill",
+              "inner-circle-skill aspect-square h-[75%]",
               "bg-[#EFEEEE]",
               "dark:bg-[#191919] dark:shadow-[0px_0px_70px_rgba(255,255,255,0.1)]",
               "flex items-center justify-center rounded-full"
@@ -36,7 +36,7 @@ const Skills = () => {
           >
             <div
               className={classNames(
-                "h-[350px] w-[350px] inner-circle-skill",
+                "inner-circle-skill aspect-square h-[50%]",
                 "bg-[#EFEEEE]",
                 "dark:bg-[#191919] dark:shadow-[0px_0px_70px_rgba(255,255,255,0.1)]",
                 "flex items-center justify-center",
@@ -45,7 +45,7 @@ const Skills = () => {
             >
               <div
                 className={classNames(
-                  "h-[250px] w-[250px] inner-circle-skill",
+                  "inner-circle-skill aspect-square h-[40%]",
                   "animate-spin-skill-reverse",
                   "bg-[#EFEEEE]",
                   "dark:bg-[#191919] dark:shadow-[0px_0px_70px_rgba(255,255,255,0.1)]",
