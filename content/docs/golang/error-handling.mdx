@@ -1,0 +1,35 @@
+---
+title: Error Handling in Go
+description: Model, wrap, and inspect errors to keep services debuggable.
+---
+
+In Go, errors are values. Good error handling is explicit and composable.
+
+## Key Patterns
+
+- Return early on error
+- Wrap errors with context using `fmt.Errorf`
+- Define sentinel or typed errors for branching logic
+
+## Wrapping and Matching
+
+```go
+var ErrNotFound = errors.New("not found")
+
+func loadUser(id string) error {
+    return fmt.Errorf("load user %s: %w", id, ErrNotFound)
+}
+
+func main() {
+    err := loadUser("42")
+    if errors.Is(err, ErrNotFound) {
+        fmt.Println("handle not found")
+    }
+}
+```
+
+## Production Advice
+
+- Do not leak internal errors to clients
+- Log with enough context (request ID, user ID)
+- Convert domain errors into transport-safe responses

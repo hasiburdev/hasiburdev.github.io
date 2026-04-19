@@ -1,0 +1,41 @@
+---
+title: Guards and Interceptors
+description: Enforce authorization and shape responses cleanly across your app.
+---
+
+Guards handle access decisions, while interceptors transform or observe request/response flows.
+
+## Guard Example
+
+```ts
+@Injectable()
+export class RolesGuard implements CanActivate {
+  canActivate(context: ExecutionContext): boolean {
+    const request = context.switchToHttp().getRequest();
+    return request.user?.role === "admin";
+  }
+}
+```
+
+## Interceptor Example
+
+```ts
+@Injectable()
+export class ResponseTimeInterceptor implements NestInterceptor {
+  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+    const start = Date.now();
+    return next.handle().pipe(
+      tap(() => {
+        const ms = Date.now() - start;
+        console.log(`Request took ${ms}ms`);
+      }),
+    );
+  }
+}
+```
+
+## Decision Guide
+
+- Use guards for auth and role checks
+- Use interceptors for logging, metrics, and response mapping
+- Keep controllers thin and declarative

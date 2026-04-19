@@ -1,0 +1,36 @@
+---
+title: Building REST APIs in Go
+description: Design maintainable HTTP services using net/http and layered architecture.
+---
+
+A maintainable Go API usually separates transport, business logic, and persistence.
+
+## Recommended Layering
+
+1. Handler layer: HTTP request and response concerns
+2. Service layer: use-case and business rules
+3. Repository layer: database access
+
+## Minimal Handler Example
+
+```go
+func (h *UserHandler) GetByID(w http.ResponseWriter, r *http.Request) {
+    id := chi.URLParam(r, "id")
+
+    user, err := h.service.GetUser(r.Context(), id)
+    if err != nil {
+        http.Error(w, "user not found", http.StatusNotFound)
+        return
+    }
+
+    w.Header().Set("Content-Type", "application/json")
+    json.NewEncoder(w).Encode(user)
+}
+```
+
+## API Design Tips
+
+- Validate input at boundaries
+- Return predictable error payloads
+- Use middleware for auth, logging, and tracing
+- Keep handlers thin; business rules stay in services

@@ -1,0 +1,29 @@
+---
+title: NestJS Modules and Dependency Injection
+description: Organize services with modules and wire dependencies using providers.
+---
+
+NestJS uses modules to group related capabilities and providers to inject reusable services.
+
+## Why Modules Matter
+
+- Create clear feature boundaries
+- Make imports and exports explicit
+- Improve scalability in larger teams
+
+## Example Structure
+
+```ts
+@Module({
+  controllers: [UsersController],
+  providers: [UsersService, UsersRepository],
+  exports: [UsersService],
+})
+export class UsersModule {}
+```
+
+## DI Tips
+
+- Depend on interfaces/tokens where possible
+- Keep services focused on use-cases
+- Avoid circular dependencies by extracting shared modules
