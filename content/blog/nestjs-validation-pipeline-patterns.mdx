@@ -1,0 +1,31 @@
+---
+title: NestJS Validation Pipeline Patterns
+description: A roadmap for robust input validation and transformation.
+date: 2026-04-12
+author: Fuma Nama
+---
+
+## Overview of Validation Pipelines
+
+Input validation should happen at the edges of the system. NestJS pipes and DTOs create a reliable contract between clients and application logic.
+
+Its primary functions include:
+
+- Rejecting malformed payloads early.
+- Transforming raw input into typed objects.
+- Enforcing strict request schemas across modules.
+
+### Comparison with Manual Validation in Services
+
+Boundary validation is usually safer than service-level ad hoc checks:
+
+- **Single Entry Contract:** Validation is centralized at request boundaries.
+- **Cleaner Services:** Business logic is not mixed with parsing rules.
+- **Consistency:** Shared DTOs reduce endpoint drift.
+- **Security:** Unknown fields can be dropped or rejected.
+
+Manual validation inside services often leads to duplication and inconsistent error responses.
+
+## Roadmap
+
+Enable strict global validation, define DTO versioning conventions, and align error formats for all public APIs.

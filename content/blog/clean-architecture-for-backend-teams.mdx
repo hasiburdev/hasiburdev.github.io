@@ -1,0 +1,31 @@
+---
+title: Clean Architecture for Backend Teams
+description: A roadmap for separating concerns in evolving backend systems.
+date: 2026-03-30
+author: Fuma Nama
+---
+
+## Overview of Clean Architecture
+
+Clean architecture emphasizes stable domain rules and replaceable infrastructure. It helps teams evolve systems without rewriting core use-cases.
+
+Its primary functions include:
+
+- Isolating business logic from frameworks.
+- Defining explicit boundaries between layers.
+- Improving long-term maintainability and testing.
+
+### Comparison with Framework-Centric Design
+
+Framework-centric code can move quickly at first but often hardens into brittle coupling:
+
+- **Domain First:** Use-cases remain independent of transport.
+- **Adapter Flexibility:** Databases and APIs can be swapped.
+- **Test Simplicity:** Domain logic can be tested without full runtime.
+- **Change Control:** Dependencies point inward.
+
+Framework-centric structures usually spread technical details across business workflows.
+
+## Roadmap
+
+Start by extracting use-case services from controller logic, then codify dependency direction rules in code review standards.

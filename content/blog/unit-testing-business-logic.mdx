@@ -1,0 +1,31 @@
+---
+title: Unit Testing Business Logic
+description: A roadmap for focused tests around domain behavior.
+date: 2026-04-08
+author: Fuma Nama
+---
+
+## Overview of Unit Testing
+
+Unit tests are most valuable when they validate business intent rather than implementation details. They should be fast, isolated, and clear.
+
+Its primary functions include:
+
+- Verifying decision logic under many scenarios.
+- Documenting expected behavior for future maintainers.
+- Providing rapid feedback during local development.
+
+### Comparison with Mock-Heavy Unit Tests
+
+Behavior-driven unit tests outperform overly mocked tests:
+
+- **Stability:** Less coupling to private internals.
+- **Readability:** Scenarios reflect business language.
+- **Refactor Safety:** Internal changes break fewer tests.
+- **Confidence:** Assertions target outcomes.
+
+Mock-heavy suites can pass while hiding real regressions in business behavior.
+
+## Roadmap
+
+Define domain-level test cases first, then add minimal doubles only for external boundaries.

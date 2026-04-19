@@ -1,0 +1,31 @@
+---
+title: E2E Testing Critical Flows
+description: A roadmap for reliable end-to-end tests that protect business value.
+date: 2026-04-04
+author: Fuma Nama
+---
+
+## Overview of E2E Testing
+
+End-to-end tests should protect the highest-value user journeys, such as sign-up, checkout, and billing flows. They are expensive but essential for confidence.
+
+Its primary functions include:
+
+- Verifying complete system behavior from user perspective.
+- Detecting integration failures across services.
+- Preventing release regressions in critical paths.
+
+### Comparison with Broad E2E Coverage
+
+Targeted E2E coverage is usually stronger than trying to test everything:
+
+- **Reliability:** Fewer, high-value flows reduce flakiness.
+- **Speed:** Shorter pipelines improve release cadence.
+- **Maintainability:** Less fragile test surface.
+- **Signal:** Failures map to meaningful business risk.
+
+Overly broad E2E suites often become slow, brittle, and ignored.
+
+## Roadmap
+
+Define a critical-flow matrix with product teams, keep scenarios deterministic, and run the most valuable E2E checks on every merge.

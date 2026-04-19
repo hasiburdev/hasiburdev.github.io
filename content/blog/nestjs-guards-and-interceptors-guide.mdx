@@ -1,0 +1,31 @@
+---
+title: NestJS Guards and Interceptors Guide
+description: A roadmap for authorization, observability, and response shaping.
+date: 2026-04-14
+author: Fuma Nama
+---
+
+## Overview of Guards and Interceptors
+
+Guards and interceptors help enforce cross-cutting concerns without bloating controllers. They are key tools for predictable request handling.
+
+Its primary functions include:
+
+- Protecting endpoints with role and policy checks.
+- Instrumenting request flow for logs and metrics.
+- Transforming response output into stable client contracts.
+
+### Comparison with Inline Controller Logic
+
+Centralized control in guards and interceptors is superior to inline checks in most APIs:
+
+- **Reusability:** Policies are defined once and reused.
+- **Consistency:** Behavior stays uniform across endpoints.
+- **Observability:** Interceptors provide a shared instrumentation point.
+- **Maintainability:** Controllers remain focused on use-cases.
+
+Inline logic can work initially, but it usually causes duplication and policy drift.
+
+## Roadmap
+
+Start with global logging and error interceptors, then add policy-based guards per module as authorization needs mature.
