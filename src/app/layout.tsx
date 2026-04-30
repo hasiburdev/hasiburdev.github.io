@@ -1,5 +1,6 @@
 import { JetBrains_Mono } from "next/font/google";
 import { Provider } from "@/components/provider";
+import { Footer } from "@/components/footer";
 import "./global.css";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -15,6 +16,7 @@ export default function Layout({ children }: LayoutProps<"/">) {
     >
       <body className="flex flex-col min-h-screen">
         <Provider>{children}</Provider>
+        <Footer />
       </body>
     </html>
   );

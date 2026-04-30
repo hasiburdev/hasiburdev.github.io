@@ -17,11 +17,13 @@ export default function Page() {
   return (
     <main className="max-w-350 mx-auto">
       <section className="w-full border-separator/10 border-b *:mx-auto *:max-w-(--fd-layout-width)">
-        <div className="inner relative flex h-16 gap-2 border-separator/10 border-x"></div>
+        <div className="inner relative items-center justify-start px-2 flex h-16 gap-2 border-separator/10 border-x">
+          <h1 className="text-xl  font-semibold">Blogs</h1>
+        </div>
       </section>
       {/* <HeaderBanner /> */}
       <section className="w-full border-separator/10 border-b">
-        <div className="inner relative grid grid-cols-1 gap-2 border-separator/10 border-x px-2 py-16 md:grid-cols-2 lg:grid-cols-3">
+        <div className="inner relative grid grid-cols-1 gap-2 border-separator/10 border-x px-2 py-4 md:grid-cols-2 lg:grid-cols-4">
           {posts.map((post) => (
             <Link
               key={post.url}
