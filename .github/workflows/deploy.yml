@@ -29,13 +29,16 @@ jobs:
         with:
           node-version: "24" # You can change this to match your local Node version
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
       - name: Install dependencies
-        run: |
-          npm i -g pnpm # Install pnpm globally, skip this if you already have it in your project
-          pnpm install # Use 'yarn install' or 'pnpm install' if you don't use npm
+        run: bun install
 
       - name: Build with Next.js
-        run: pnpm run build
+        run: bun run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
