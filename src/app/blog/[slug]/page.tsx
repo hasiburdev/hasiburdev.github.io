@@ -20,6 +20,17 @@ export default async function Page(props: PageProps<"/blog/[slug]">) {
 
   return (
     <article className="flex flex-col mx-auto w-full max-w-[800px] px-4 py-8">
+      <nav className="flex items-center gap-2 text-sm mb-6 text-fd-muted-foreground not-prose">
+        <Link
+          href="/blog"
+          className="hover:text-fd-foreground transition-colors"
+        >
+          Blog
+        </Link>
+        <span>/</span>
+        <span className="text-fd-foreground truncate">{page.data.title}</span>
+      </nav>
+
       <div className="flex flex-row gap-4 text-sm mb-8">
         <div>
           <p className="mb-1 text-fd-muted-foreground">Written by</p>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { blog } from "@/lib/source";
 import { PathUtils } from "fumadocs-core/source";
+import { generateGradientFromString } from "@/lib/gradient";
 
 function getName(path: string) {
   return PathUtils.basename(path, PathUtils.extname(path));
@@ -27,7 +28,12 @@ export default function Page() {
               href={post.url}
               className="group relative flex flex-col overflow-hidden rounded-xs border border-separator/10 bg-background pb-6 transition *:px-6 hover:border-foreground/20"
             >
-              <span className="relative h-64 w-full">
+              <span
+                className="relative h-64 w-full"
+                style={{
+                  background: `linear-gradient(135deg, ${generateGradientFromString(post.data.title).from}, ${generateGradientFromString(post.data.title).to})`,
+                }}
+              >
                 {/* <Image
                   src={post.data.image || getBlogPageImage(post).url}
                   alt={post.data.title}
