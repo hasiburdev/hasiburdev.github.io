@@ -1,0 +1,242 @@
+---
+title: Bash Scripting Fundamentals
+description: Variables, functions, control flow for production scripts
+---
+
+Bash syntax can feel cryptic at first—it evolved from shell commands rather than language design. But understanding the fundamentals deeply is essential. Many production failures stem from developers treating bash as pseudo-code rather than learning its actual semantics. This guide establishes the mental models you need for reliable scripts.
+
+## Variables and Scoping
+
+Bash variables are globally scoped by default. A variable set in a child function persists in the parent scope, which is a common source of bugs. Use `local` to create function-scoped variables:
+
+```bash
+#!/bin/bash
+
+counter=0  # Global scope
+
+increment_global() {
+  counter=$((counter + 1))  # Modifies global
+}
+
+increment_local() {
+  local counter=0  # Local scope - doesn't affect global
+  counter=$((counter + 1))
+  return "$counter"
+}
+
+increment_global
+echo "Global counter: $counter"  # Prints: 1
+
+result=$(increment_local)
+echo "Global counter after local call: $counter"  # Still 1 (local didn't affect it)
+```
+
+**Production lesson**: Always use `local` in functions unless you explicitly need global state. This prevents state leaks and makes functions reusable.
+
+## Parameter Expansion
+
+Parameter expansion is where bash gets powerful—it lets you manipulate variables without spawning subshells. Learn these patterns for working with file paths and configuration:
+
+```bash
+#!/bin/bash
+
+filepath="/home/app/config/database.yml"
+
+# Remove leading directory path (get filename)
+filename="${filepath##*/}"  # database.yml
+
+# Remove file extension
+name_only="${filename%.yml}"  # database
+
+# Remove trailing directory
+dir_only="${filepath%/*}"  # /home/app/config
+
+# Provide default value if variable is empty
+db_host="${DB_HOST:-localhost}"  # Uses localhost if DB_HOST not set
+
+# Assign default and use it
+db_port="${DB_PORT:=5432}"  # Sets DB_PORT=5432 if not set
+
+# Uppercase substitution (bash 4+)
+uppercase="${name_only^^}"  # DATABASE
+```
+
+These expand inline without calling external commands, making them efficient for scripts that run in resource-constrained environments.
+
+## Functions with Return Values
+
+Bash functions can return numeric exit codes (0-255) or output strings via `echo`. Understand the difference:
+
+```bash
+#!/bin/bash
+
+# Anti-pattern: Relying on exit code for multiple return values
+get_config() {
+  local key="$1"
+  grep "^${key}=" config.ini | cut -d= -f2
+  return $?  # Returns grep's exit code, not the value
+}
+
+# Better: Output the value, let caller capture it
+get_config_value() {
+  local key="$1"
+  local value
+  value=$(grep "^${key}=" config.ini | cut -d= -f2)
+  if [[ -z "$value" ]]; then
+    echo "ERROR: Config key '$key' not found" >&2
+    return 1  # Signal failure via exit code
+  fi
+  echo "$value"  # Output the value on stdout
+  return 0
+}
+
+# Usage
+if config_value=$(get_config_value "database_url"); then
+  echo "Database URL: $config_value"
+else
+  echo "Failed to get config" >&2
+  exit 1
+fi
+```
+
+**Production lesson**: Return exit codes for success/failure. Use stdout for data. This lets callers chain commands and check errors independently.
+
+## Arrays and Iteration
+
+Bash arrays are powerful but require careful quoting to avoid word-splitting. Use them for managing lists of items:
+
+```bash
+#!/bin/bash
+
+# Declare array
+services=("nginx" "postgresql" "redis")
+
+# Append to array
+services+=("memcached")
+
+# Iterate safely (note "${array[@]}" with quotes)
+for service in "${services[@]}"; do
+  echo "Checking service: $service"
+  systemctl status "$service" >/dev/null 2>&1 || echo "WARNING: $service not running"
+done
+
+# Iterate with index
+for i in "${!services[@]}"; do
+  echo "[$i] ${services[$i]}"
+done
+
+# Common mistake: Without quotes, word-splitting breaks
+for service in ${services[@]}; do  # BUG: If service name has spaces, breaks
+  echo "$service"
+done
+```
+
+## Control Structures
+
+Conditional and loop syntax differs from most languages. Pay attention to spacing—bash is whitespace-sensitive in specific contexts:
+
+```bash
+#!/bin/bash
+
+# if/then/else (note: [[ ]] is bash-specific, safer than [ ])
+if [[ -f "$config_file" ]]; then
+  source "$config_file"
+elif [[ -f "$default_config" ]]; then
+  source "$default_config"
+else
+  echo "No config file found" >&2
+  exit 1
+fi
+
+# case statement for multiple conditions
+action="${1:-help}"
+case "$action" in
+  start)
+    systemctl start myapp
+    ;;
+  stop)
+    systemctl stop myapp
+    ;;
+  restart)
+    systemctl restart myapp
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart}"
+    exit 1
+    ;;
+esac
+
+# while loop with condition
+attempt=0
+while [[ $attempt -lt 3 ]]; do
+  if curl -s "http://localhost:8080/health" >/dev/null; then
+    echo "Service is healthy"
+    break
+  fi
+  echo "Attempt $((attempt + 1)) failed, retrying..."
+  attempt=$((attempt + 1))
+  sleep 2
+done
+```
+
+## Functions as Building Blocks
+
+Structure complex scripts by composing small, focused functions. Each function should have a clear contract:
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+# Documentation comment
+# validate_config - Check that required config keys exist
+# Returns: 0 on success, 1 if validation fails
+validate_config() {
+  local config_file="$1"
+  local required_keys=("db_host" "db_port" "api_key")
+
+  if [[ ! -f "$config_file" ]]; then
+    echo "ERROR: Config file not found: $config_file" >&2
+    return 1
+  fi
+
+  for key in "${required_keys[@]}"; do
+    if ! grep -q "^${key}=" "$config_file"; then
+      echo "ERROR: Required config key missing: $key" >&2
+      return 1
+    fi
+  done
+
+  return 0
+}
+
+# deploy_service - Deploy application with pre-checks
+deploy_service() {
+  local app_name="$1"
+  local config_file="$2"
+
+  echo "Validating configuration for $app_name..."
+  validate_config "$config_file"
+
+  echo "Deploying $app_name..."
+  # Deployment logic here
+}
+
+# Main execution
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  deploy_service "my-app" "/etc/my-app/config.ini"
+fi
+```
+
+## Production Best Practices
+
+**1. Always use `local` in functions** — Prevent unintended global state mutations.
+
+**2. Quote variables by default** — `"$var"` instead of `$var`. Exceptions are rare.
+
+**3. Use `[[ ]]` instead of `[ ]`** — Bash-specific, more robust, fewer quoting edge cases.
+
+**4. Use `$()` instead of backticks** — Modern syntax, nestable, clearer.
+
+**5. Comment your intent** — Bash syntax can be terse. Explain why, not what.
+
+The next step is mastering error handling—the make-or-break practice for production bash.

@@ -1,0 +1,314 @@
+---
+title: System Automation with Bash
+description: File operations, permissions, and idempotent patterns for DevOps
+---
+
+Most bash scripts in production do one thing: manage files and directories. Deployment scripts copy artifacts, migration scripts modify config files, and cleanup scripts remove old logs. Mastering file operations with safety and idempotency is essential for reliable automation.
+
+## Safe File Operations
+
+The fundamental rule: **always check before modifying**. Never assume the state of the filesystem:
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+# Anti-pattern: Blindly create/overwrite
+cp source.conf /etc/myapp/config.conf  # What if /etc/myapp doesn't exist?
+rm -rf /var/log/myapp/*  # What if the directory doesn't exist?
+
+# Better: Defensive operations
+backup_config() {
+  local config_file="/etc/myapp/config.conf"
+  local backup_dir="/etc/myapp/backups"
+
+  # Check if config exists before backing up
+  if [[ ! -f "$config_file" ]]; then
+    echo "WARNING: Config file not found: $config_file" >&2
+    return 1
+  fi
+
+  # Ensure backup directory exists
+  mkdir -p "$backup_dir"
+
+  # Create timestamped backup
+  local backup_file="$backup_dir/config.conf.$(date +%Y%m%d_%H%M%S)"
+  cp "$config_file" "$backup_file"
+  echo "Backed up to: $backup_file"
+}
+
+cleanup_logs() {
+  local log_dir="/var/log/myapp"
+
+  # Check if directory exists
+  if [[ ! -d "$log_dir" ]]; then
+    echo "INFO: Log directory doesn't exist (nothing to clean): $log_dir"
+    return 0
+  fi
+
+  # Remove files older than 30 days (safer than find)
+  find "$log_dir" -type f -mtime +30 -delete
+  echo "Cleaned logs older than 30 days"
+}
+
+backup_config
+cleanup_logs
+```
+
+## Working with Paths
+
+Handle paths correctly to avoid subtle bugs. Use absolute paths in production scripts:
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+# Anti-pattern: Relative paths in automation scripts
+cd /tmp
+mkdir -p myapp
+cd myapp
+cp config.yml .  # Which /tmp? Which myapp? Too ambiguous.
+
+# Better: Absolute paths with defensive checks
+deploy_app() {
+  local app_root="/opt/myapp"
+  local config_dir="$app_root/config"
+  local build_artifact="${1:-}"
+
+  if [[ -z "$build_artifact" ]]; then
+    echo "ERROR: Build artifact path required" >&2
+    return 1
+  fi
+
+  if [[ ! -f "$build_artifact" ]]; then
+    echo "ERROR: Build artifact not found: $build_artifact" >&2
+    return 1
+  fi
+
+  # Create app directory if it doesn't exist
+  mkdir -p "$app_root" "$config_dir"
+
+  # Extract artifact to app root
+  tar -xzf "$build_artifact" -C "$app_root"
+  echo "Deployed to: $app_root"
+}
+
+deploy_app "/home/ci/builds/myapp-v1.0.0.tar.gz"
+```
+
+## Idempotent Operations
+
+Production scripts often run multiple times. Repeated executions should produce the same result, not fail or cause side effects:
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+# Anti-pattern: Not idempotent
+setup_user() {
+  useradd appuser  # Fails if user already exists
+  mkdir /home/appuser
+  chown appuser:appuser /home/appuser
+}
+
+# Better: Check state before modifying
+setup_user_idempotent() {
+  local username="appuser"
+
+  # Create user only if it doesn't exist
+  if ! id "$username" &>/dev/null; then
+    useradd "$username"
+    echo "Created user: $username"
+  else
+    echo "User already exists: $username"
+  fi
+
+  # Create home directory if needed
+  local home_dir="/home/$username"
+  if [[ ! -d "$home_dir" ]]; then
+    mkdir -p "$home_dir"
+    chown "$username:$username" "$home_dir"
+    echo "Created home directory: $home_dir"
+  fi
+}
+
+setup_user_idempotent
+setup_user_idempotent  # Safe to run again
+```
+
+## Permission Management
+
+File permissions are critical for security and functionality. Be explicit about what you're doing:
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+configure_permissions() {
+  local app_dir="/opt/myapp"
+  local app_user="appuser"
+  local app_group="appuser"
+
+  # Script files need to be executable
+  find "$app_dir" -name "*.sh" -type f -exec chmod 755 {} \;
+
+  # Config files should be readable by app user only
+  find "$app_dir/config" -name "*.conf" -type f -exec chmod 640 {} \;
+
+  # Ensure app user owns the application
+  chown -R "$app_user:$app_group" "$app_dir"
+
+  # Database directory needs write access
+  mkdir -p "$app_dir/data"
+  chmod 700 "$app_dir/data"
+  chown "$app_user:$app_group" "$app_dir/data"
+
+  echo "Permissions configured for $app_dir"
+}
+
+configure_permissions
+```
+
+## Recursive Directory Operations
+
+When modifying directory trees, use find with explicit patterns to avoid accidents:
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+# Anti-pattern: Dangerous recursive operations
+rm -rf /app/build/*
+find /app -name "*.log" -delete  # Deletes all .log files anywhere under /app
+
+# Better: Specific, limited scope
+clean_build_artifacts() {
+  local build_dir="/app/build"
+
+  if [[ ! -d "$build_dir" ]]; then
+    echo "INFO: Build directory doesn't exist: $build_dir"
+    return 0
+  fi
+
+  # Remove only specific file types in specific directories
+  find "$build_dir" -maxdepth 2 -name "*.o" -o -name "*.tmp" -delete
+  echo "Cleaned build artifacts"
+}
+
+rotate_logs() {
+  local log_dir="/var/log/myapp"
+
+  # Only remove .log files in the app log directory, not subdirectories
+  find "$log_dir" -maxdepth 1 -name "*.log" -mtime +7 -delete
+  echo "Rotated logs older than 7 days"
+}
+
+clean_build_artifacts
+rotate_logs
+```
+
+## Configuration File Management
+
+Modifying config files programmatically is error-prone. Use targeted approaches:
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+# Update a key-value config file (ini-style)
+update_config_value() {
+  local config_file="$1"
+  local key="$2"
+  local value="$3"
+
+  if [[ ! -f "$config_file" ]]; then
+    echo "ERROR: Config file not found: $config_file" >&2
+    return 1
+  fi
+
+  # Check if key exists
+  if grep -q "^${key}=" "$config_file"; then
+    # Update existing value (escape special chars in sed)
+    sed -i.bak "s|^${key}=.*|${key}=${value}|" "$config_file"
+    echo "Updated $key in $config_file"
+  else
+    # Add new key-value pair
+    echo "${key}=${value}" >> "$config_file"
+    echo "Added $key to $config_file"
+  fi
+}
+
+# Enable a feature by uncommenting a line
+enable_config_option() {
+  local config_file="$1"
+  local option="$2"
+
+  # Comment out conflicting options first
+  sed -i.bak "s/^${option}=/#${option}=/" "$config_file"
+
+  # Uncomment the desired option
+  sed -i "s/^#*${option}=//" "$config_file"
+  echo "Enabled option: $option"
+}
+
+update_config_value "/etc/myapp/app.conf" "max_connections" "100"
+enable_config_option "/etc/myapp/app.conf" "debug_mode"
+```
+
+## Atomic File Updates
+
+For critical config files, use atomic writes to prevent corruption if the script fails mid-update:
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+atomic_update_config() {
+  local config_file="$1"
+  local new_content="$2"
+  local temp_file
+
+  # Create temp file in same directory (same filesystem)
+  temp_file=$(mktemp "$(dirname "$config_file")/.config.XXXXXX")
+
+  # Write to temp file
+  echo "$new_content" > "$temp_file"
+
+  # Validate temp file is readable
+  if ! [[ -f "$temp_file" ]]; then
+    echo "ERROR: Failed to create temp file" >&2
+    return 1
+  fi
+
+  # Atomically replace old with new
+  mv "$temp_file" "$config_file"
+  echo "Atomically updated: $config_file"
+}
+
+# Generate new config
+new_config="
+database_url=postgresql://localhost/myapp
+max_connections=50
+cache_enabled=true
+"
+
+atomic_update_config "/etc/myapp/app.conf" "$new_config"
+```
+
+## Production Best Practices
+
+**1. Use absolute paths** — Eliminates ambiguity in automation contexts.
+
+**2. Check state before modifying** — Never assume the filesystem state.
+
+**3. Be idempotent** — Safe to run scripts multiple times.
+
+**4. Back up before modifying** — Config changes, permission changes, anything destructive.
+
+**5. Use `find` with `-maxdepth`** — Prevents accidentally modifying unintended files.
+
+**6. Validate after operations** — Confirm the operation succeeded (file exists, permissions correct, etc.).
+
+**7. Use atomic writes for critical files** — Prevent corruption if script fails mid-operation.
+
+File operations are the bridge between your scripts and the actual system. Do them carefully, and your deployments will be reliable.

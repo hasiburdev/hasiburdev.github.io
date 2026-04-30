@@ -1,0 +1,271 @@
+---
+title: Error Handling Patterns in Bash
+description: Exit codes, error trapping, and production-grade failure management
+---
+
+Silent failures are the nightmare of automation. A script completes successfully, your CI/CD pipeline marks it green, but your database is in an inconsistent state. Error handling in bash is not optional—it's the difference between reliable automation and late-night incidents.
+
+## The `set -euo pipefail` Pattern
+
+This is your first line of defense. Use it in every production script:
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+# -e: Exit immediately if any command exits with non-zero status
+# -u: Treat unset variables as errors
+# -o pipefail: Pipeline fails if any command fails (not just the last one)
+```
+
+Without this, your script continues after errors. Watch what happens:
+
+```bash
+# Anti-pattern: No error handling
+#!/bin/bash
+cp important_file.txt /backup/
+rm important_file.txt
+echo "Backup complete"
+
+# If cp fails (destination doesn't exist), rm still runs - disaster!
+```
+
+With `set -euo pipefail`, the script exits on the failed `cp` and never reaches `rm`.
+
+## Exit Codes and Explicit Checks
+
+Exit codes are bash's fundamental error mechanism. Every command returns 0 (success) or non-zero (failure). Learn to work with them intentionally:
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+# Check exit code explicitly
+if docker pull myapp:latest; then
+  echo "Image pulled successfully"
+else
+  exit_code=$?
+  echo "Failed to pull image (exit code: $exit_code)" >&2
+  exit "$exit_code"
+fi
+
+# Or use && and || for conditional execution
+docker pull myapp:latest && echo "Pull successful" || echo "Pull failed"
+
+# Capture exit code without affecting set -e
+set +e
+curl -s http://localhost:8080/health
+curl_exit_code=$?
+set -e
+
+if [[ $curl_exit_code -eq 0 ]]; then
+  echo "Service healthy"
+else
+  echo "Health check failed" >&2
+  exit 1
+fi
+```
+
+**Production lesson**: Exit codes convey information to calling scripts. Preserve them and pass them up the chain.
+
+## Error Trapping with `trap`
+
+The `trap` command executes a function when the script exits (normally or via error). Use it for cleanup and logging:
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+# Setup cleanup function
+cleanup() {
+  local exit_code=$?
+  echo "Script exiting with code: $exit_code"
+
+  # Clean up resources
+  if [[ -n "${TEMP_FILE:-}" ]] && [[ -f "$TEMP_FILE" ]]; then
+    rm -f "$TEMP_FILE"
+    echo "Cleaned up temp file: $TEMP_FILE"
+  fi
+
+  # Kill background processes if any
+  jobs -p | xargs -r kill 2>/dev/null || true
+
+  return "$exit_code"
+}
+
+trap cleanup EXIT
+
+# Now any exit (normal, error, signal) will run cleanup
+TEMP_FILE=$(mktemp)
+echo "Using temp file: $TEMP_FILE"
+
+# ... rest of script
+```
+
+For specific errors, use different trap handlers:
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+error_handler() {
+  local line_no=$1
+  echo "ERROR at line $line_no: Command failed" >&2
+  exit 1
+}
+
+trap 'error_handler ${LINENO}' ERR
+
+# If this fails, error_handler is called with the line number
+missing_command_that_doesnt_exist
+```
+
+## Handling Pipeline Failures
+
+`set -o pipefail` ensures the entire pipeline fails if any stage fails:
+
+```bash
+# Without pipefail
+#!/bin/bash
+cat large_file.txt | grep "pattern" | sort > output.txt
+echo "Done"  # Prints even if grep found nothing or sort failed
+
+# With pipefail (correct)
+#!/bin/bash
+set -o pipefail
+cat large_file.txt | grep "pattern" | sort > output.txt
+echo "Done"  # Only prints if entire pipeline succeeds
+```
+
+## Defensive Input Validation
+
+Always validate inputs before using them. This prevents subtle bugs and security issues:
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+deploy_version() {
+  local version="$1"
+  local environment="${2:-production}"
+
+  # Validate version format (semantic versioning)
+  if ! [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+    echo "ERROR: Invalid version format: $version (expected X.Y.Z)" >&2
+    return 1
+  fi
+
+  # Validate environment is known
+  if ! [[ "$environment" =~ ^(staging|production)$ ]]; then
+    echo "ERROR: Unknown environment: $environment" >&2
+    return 1
+  fi
+
+  # Check that version doesn't already exist in environment
+  if curl -s "https://api.example.com/deployments?version=$version&env=$environment" | \
+     grep -q '"status":"deployed"'; then
+    echo "ERROR: Version $version already deployed to $environment" >&2
+    return 1
+  fi
+
+  echo "Deploying $version to $environment..."
+}
+
+# Usage with error handling
+if ! deploy_version "${VERSION:-}" "${ENV:-production}"; then
+  exit 1
+fi
+```
+
+## Common Mistakes to Avoid
+
+**Mistake 1: Not quoting variables**
+
+```bash
+# Anti-pattern
+rm $file_path  # If file_path is empty or has spaces, disaster
+
+# Correct
+rm "$file_path"  # Safe, even if empty (will fail with clear error)
+```
+
+**Mistake 2: Ignoring command failures in sequences**
+
+```bash
+# Anti-pattern
+mkdir -p /app && cd /app
+npm install
+npm run build  # Runs even if npm install failed
+
+# Correct: set -e handles this
+set -euo pipefail
+mkdir -p /app && cd /app
+npm install
+npm run build  # Exits if npm install fails
+```
+
+**Mistake 3: Losing error context in subshells**
+
+```bash
+# Anti-pattern: Error happens in subshell, parent doesn't know
+result=$(command_that_fails)
+
+# Better: Check the captured result or use explicit error handling
+result=$(command_that_might_fail 2>&1) || {
+  exit_code=$?
+  echo "Command failed: $result" >&2
+  exit "$exit_code"
+}
+```
+
+## Error Logging in CI/CD
+
+CI/CD systems need structured error information. Include timestamps, context, and severity:
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+log() {
+  local level="$1"
+  shift
+  local message="$*"
+  local timestamp
+  timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+  echo "[$timestamp] [$level] $message" >&2
+}
+
+run_test() {
+  local test_name="$1"
+  log "INFO" "Starting test: $test_name"
+
+  if ! npm test -- "$test_name"; then
+    log "ERROR" "Test failed: $test_name"
+    return 1
+  fi
+
+  log "INFO" "Test passed: $test_name"
+}
+
+# Usage
+run_test "integration" || {
+  log "ERROR" "CI pipeline failed at test stage"
+  exit 1
+}
+```
+
+## Production Best Practices
+
+**1. Start with `set -euo pipefail`** — Always. No exceptions for production scripts.
+
+**2. Use `trap` for cleanup** — Ensure resources (files, processes, connections) are cleaned up.
+
+**3. Validate inputs early** — Fail fast with clear error messages.
+
+**4. Log context** — Include timestamps, what was attempted, why it failed.
+
+**5. Preserve exit codes** — Let errors propagate up the call chain.
+
+**6. Test failure paths** — Write test cases for what happens when commands fail.
+
+Error handling is the foundation of reliability. Invest time here and your scripts will be trustworthy enough for critical infrastructure.

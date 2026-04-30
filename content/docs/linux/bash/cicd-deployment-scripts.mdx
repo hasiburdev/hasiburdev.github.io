@@ -1,0 +1,455 @@
+---
+title: CI/CD and Deployment Scripts
+description: Pipeline automation, atomic operations, and production deployment patterns
+---
+
+Deployment scripts are where bash proves its value. They orchestrate services, validate preconditions, update configurations, and coordinate complex operations. A good deployment script is the difference between smooth deployments and 3 AM incidents. This guide focuses on patterns that make deployment scripts reliable, observable, and recoverable.
+
+## Pre-deployment Validation
+
+Before making any changes, validate that the environment is in a state where deployment can succeed:
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+# Comprehensive pre-deployment checks
+validate_deployment_environment() {
+  local environment="$1"
+  local app_version="$2"
+
+  echo "=== Pre-deployment Validation for $environment ===" >&2
+
+  # Check required tools are installed
+  for tool in docker kubectl helm; do
+    if ! command -v "$tool" &>/dev/null; then
+      echo "ERROR: Required tool not found: $tool" >&2
+      return 1
+    fi
+  done
+
+  # Check cluster connectivity
+  if ! kubectl cluster-info &>/dev/null; then
+    echo "ERROR: Cannot connect to Kubernetes cluster" >&2
+    return 1
+  fi
+
+  # Check namespace exists
+  if ! kubectl get namespace "$environment" &>/dev/null; then
+    echo "ERROR: Namespace does not exist: $environment" >&2
+    return 1
+  fi
+
+  # Validate image exists in registry
+  local image_repo="myregistry/myapp"
+  if ! docker pull "${image_repo}:${app_version}" &>/dev/null; then
+    echo "ERROR: Docker image not found: ${image_repo}:${app_version}" >&2
+    return 1
+  fi
+
+  # Check current deployment state
+  if ! kubectl -n "$environment" get deployment myapp &>/dev/null; then
+    echo "WARNING: Deployment does not exist yet (fresh install?)" >&2
+  fi
+
+  # Verify database migrations can be applied
+  if ! validate_migrations "$app_version"; then
+    echo "ERROR: Database migrations are invalid" >&2
+    return 1
+  fi
+
+  echo "Pre-deployment validation passed" >&2
+  return 0
+}
+
+validate_migrations() {
+  local version="$1"
+  # Check that migration scripts exist and are syntactically valid
+  # This is simplified - real implementation would validate actual SQL
+  if [[ ! -f "/migrations/${version}/migration.sql" ]]; then
+    return 1
+  fi
+  return 0
+}
+
+validate_deployment_environment "production" "v1.2.3"
+```
+
+## Atomic Deployment Operations
+
+Deployments should be atomic: either fully succeed or cleanly rollback to the previous state. Structure your deployment to make this possible:
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+# Deployment with built-in rollback capability
+deploy_with_rollback() {
+  local app_name="$1"
+  local new_version="$2"
+  local namespace="${3:-default}"
+
+  local previous_version
+  previous_version=$(kubectl -n "$namespace" get deployment "$app_name" \
+    -o jsonpath='{.spec.template.spec.containers[0].image}' | cut -d: -f2)
+
+  echo "Deploying $app_name:$new_version (previous: $previous_version)"
+
+  # Update deployment with new image
+  if ! kubectl -n "$namespace" set image \
+    "deployment/$app_name" "app=myregistry/$app_name:$new_version" \
+    --record; then
+    echo "ERROR: Failed to update deployment image" >&2
+    return 1
+  fi
+
+  # Wait for rollout, with timeout
+  echo "Waiting for deployment rollout..."
+  if ! kubectl -n "$namespace" rollout status deployment/"$app_name" --timeout=5m; then
+    echo "ERROR: Rollout failed, rolling back to $previous_version" >&2
+
+    # Rollback
+    kubectl -n "$namespace" set image \
+      "deployment/$app_name" "app=myregistry/$app_name:$previous_version" \
+      --record
+
+    kubectl -n "$namespace" rollout status deployment/"$app_name" --timeout=5m
+
+    echo "Rolled back to $previous_version" >&2
+    return 1
+  fi
+
+  # Verify deployment is healthy
+  if ! verify_deployment_health "$app_name" "$namespace"; then
+    echo "ERROR: Deployment health check failed, rolling back" >&2
+
+    kubectl -n "$namespace" set image \
+      "deployment/$app_name" "app=myregistry/$app_name:$previous_version" \
+      --record
+
+    return 1
+  fi
+
+  echo "Deployment successful: $app_name:$new_version"
+  return 0
+}
+
+verify_deployment_health() {
+  local app_name="$1"
+  local namespace="$2"
+
+  # Check that all pods are running
+  local ready_replicas
+  ready_replicas=$(kubectl -n "$namespace" get deployment "$app_name" \
+    -o jsonpath='{.status.readyReplicas}')
+
+  local desired_replicas
+  desired_replicas=$(kubectl -n "$namespace" get deployment "$app_name" \
+    -o jsonpath='{.spec.replicas}')
+
+  if [[ "$ready_replicas" != "$desired_replicas" ]]; then
+    echo "Not all replicas ready: $ready_replicas/$desired_replicas" >&2
+    return 1
+  fi
+
+  return 0
+}
+
+deploy_with_rollback "myapp" "v1.2.3" "production"
+```
+
+## Configuration and Secrets Management
+
+Deployments often need to manage configurations and secrets. Do this safely:
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+# Safe configuration deployment
+deploy_configuration() {
+  local config_source="$1"
+  local app_name="$2"
+  local namespace="${3:-default}"
+
+  # Validate config file exists and is readable
+  if [[ ! -r "$config_source" ]]; then
+    echo "ERROR: Config file not readable: $config_source" >&2
+    return 1
+  fi
+
+  # Create ConfigMap from file
+  # This will update if it exists, or create if new
+  if kubectl -n "$namespace" create configmap "${app_name}-config" \
+    --from-file="$config_source" --dry-run=client -o yaml | \
+    kubectl apply -f -; then
+    echo "Configuration deployed"
+  else
+    echo "ERROR: Failed to deploy configuration" >&2
+    return 1
+  fi
+
+  # Force pod restart to pick up new config
+  # (ConfigMaps aren't automatically hot-reloaded)
+  kubectl -n "$namespace" rollout restart deployment/"$app_name"
+}
+
+# Secrets from environment variables (safer than files)
+deploy_secrets() {
+  local app_name="$1"
+  local namespace="${2:-default}"
+
+  # Verify required secrets are set
+  local required_secrets=("DB_PASSWORD" "API_KEY" "JWT_SECRET")
+  for secret_name in "${required_secrets[@]}"; do
+    if [[ -z "${!secret_name:-}" ]]; then
+      echo "ERROR: Required secret not set: $secret_name" >&2
+      return 1
+    fi
+  done
+
+  # Create Kubernetes secret
+  kubectl -n "$namespace" create secret generic "${app_name}-secrets" \
+    --from-literal="db_password=${DB_PASSWORD}" \
+    --from-literal="api_key=${API_KEY}" \
+    --from-literal="jwt_secret=${JWT_SECRET}" \
+    --dry-run=client -o yaml | kubectl apply -f -
+
+  echo "Secrets deployed"
+}
+
+deploy_configuration "/etc/myapp/config.yaml" "myapp" "production"
+```
+
+## Database Migrations
+
+Migrations are often the most critical part of deployment. Automate them safely:
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+# Run database migrations before deployment
+apply_database_migrations() {
+  local app_version="$1"
+  local database_url="${2:-$DATABASE_URL}"
+
+  if [[ -z "$database_url" ]]; then
+    echo "ERROR: DATABASE_URL not set" >&2
+    return 1
+  fi
+
+  echo "Applying database migrations for version $app_version..." >&2
+
+  # Create backup before migrations
+  local backup_file="/tmp/db_backup_$(date +%s).sql"
+  echo "Creating database backup: $backup_file" >&2
+
+  if ! pg_dump "$database_url" > "$backup_file"; then
+    echo "ERROR: Failed to create database backup" >&2
+    return 1
+  fi
+
+  # Run migration script
+  local migration_script="/migrations/${app_version}/up.sql"
+  if [[ ! -f "$migration_script" ]]; then
+    echo "ERROR: Migration script not found: $migration_script" >&2
+    rm -f "$backup_file"
+    return 1
+  fi
+
+  if ! psql "$database_url" -f "$migration_script"; then
+    echo "ERROR: Migration failed, restoring from backup" >&2
+    psql "$database_url" -f "$backup_file" >/dev/null
+    rm -f "$backup_file"
+    return 1
+  fi
+
+  echo "Database migrations applied successfully" >&2
+  rm -f "$backup_file"
+  return 0
+}
+
+# Verify migration completion
+verify_migrations() {
+  local app_version="$1"
+  local database_url="${2:-$DATABASE_URL}"
+
+  # Query migration history table
+  if ! psql "$database_url" -tc \
+    "SELECT version FROM schema_migrations WHERE version = '$app_version';" | \
+    grep -q "$app_version"; then
+    echo "ERROR: Migration $app_version not recorded in database" >&2
+    return 1
+  fi
+
+  echo "Migration $app_version verified"
+  return 0
+}
+
+apply_database_migrations "v1.2.3"
+verify_migrations "v1.2.3"
+```
+
+## Deployment Logging and Observability
+
+Make deployments observable. Log everything for debugging:
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+# Structured logging for deployments
+log_deployment_event() {
+  local level="$1"
+  local event="$2"
+  local metadata="${3:-}"
+
+  local timestamp
+  timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+  # Log to stdout (for CI/CD capture) and file
+  echo "[$timestamp] [$level] [DEPLOY] $event ${metadata:+($metadata)}" >&2
+
+  # Also write to deployment log for audit trail
+  echo "[$timestamp] [$level] [DEPLOY] $event ${metadata:+($metadata)}" >> \
+    "/var/log/deployments/$(date +%Y-%m-%d).log"
+}
+
+# Deployment orchestration with detailed logging
+deploy_application() {
+  local app_name="$1"
+  local new_version="$2"
+
+  log_deployment_event "INFO" "Starting deployment" "app=$app_name version=$new_version"
+
+  log_deployment_event "INFO" "Validating environment"
+  if ! validate_deployment_environment "production" "$new_version"; then
+    log_deployment_event "ERROR" "Validation failed" "app=$app_name"
+    return 1
+  fi
+
+  log_deployment_event "INFO" "Applying database migrations"
+  if ! apply_database_migrations "$new_version"; then
+    log_deployment_event "ERROR" "Migrations failed" "app=$app_name"
+    return 1
+  fi
+
+  log_deployment_event "INFO" "Deploying application"
+  if ! deploy_with_rollback "$app_name" "$new_version"; then
+    log_deployment_event "ERROR" "Application deployment failed" "app=$app_name"
+    return 1
+  fi
+
+  log_deployment_event "INFO" "Running smoke tests"
+  if ! run_smoke_tests "$app_name"; then
+    log_deployment_event "ERROR" "Smoke tests failed" "app=$app_name"
+    return 1
+  fi
+
+  log_deployment_event "INFO" "Deployment completed successfully" "app=$app_name version=$new_version"
+  return 0
+}
+
+# Smoke tests verify deployment actually works
+run_smoke_tests() {
+  local app_name="$1"
+
+  # Basic connectivity test
+  if ! curl -s "http://$app_name:8080/health" | grep -q "ok"; then
+    log_deployment_event "ERROR" "Health check failed" "app=$app_name"
+    return 1
+  fi
+
+  # Test critical endpoint
+  if ! curl -s "http://$app_name:8080/api/ping" | grep -q "pong"; then
+    log_deployment_event "ERROR" "API endpoint test failed" "app=$app_name"
+    return 1
+  fi
+
+  return 0
+}
+
+deploy_application "myapp" "v1.2.3"
+```
+
+## Deployment Coordination
+
+Coordinate multiple services in the right order:
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+# Deploy multiple services in dependency order
+deploy_system() {
+  local deployment_id
+  deployment_id="deploy-$(date +%s)"
+
+  echo "Starting coordinated deployment: $deployment_id" >&2
+
+  # Phase 1: Core services (can run in parallel)
+  echo "Phase 1: Deploying core services..." >&2
+  deploy_application "database" "$VERSION" &
+  deploy_database_pid=$!
+
+  deploy_application "cache" "$VERSION" &
+  deploy_cache_pid=$!
+
+  # Wait for core services
+  wait "$deploy_database_pid"
+  wait "$deploy_cache_pid"
+
+  # Phase 2: Application services (depend on core)
+  echo "Phase 2: Deploying application services..." >&2
+  deploy_application "api" "$VERSION" || {
+    log_deployment_event "ERROR" "API deployment failed" "deployment_id=$deployment_id"
+    return 1
+  }
+
+  deploy_application "worker" "$VERSION" || {
+    log_deployment_event "ERROR" "Worker deployment failed" "deployment_id=$deployment_id"
+    return 1
+  }
+
+  # Phase 3: Post-deployment verification
+  echo "Phase 3: Verifying deployment..." >&2
+  if ! verify_system_health; then
+    log_deployment_event "ERROR" "System health check failed" "deployment_id=$deployment_id"
+    return 1
+  fi
+
+  log_deployment_event "INFO" "Deployment completed" "deployment_id=$deployment_id"
+}
+
+verify_system_health() {
+  # Verify all services are up and communicating correctly
+  curl -s "http://api:8080/health" | grep -q "ok" || return 1
+  curl -s "http://worker:8081/health" | grep -q "ok" || return 1
+  return 0
+}
+```
+
+## Production Best Practices
+
+**1. Validate before deploying** — Pre-checks prevent most deployment failures.
+
+**2. Make deployments atomic** — Either fully succeed or fully rollback.
+
+**3. Automate database migrations** — Manual migrations are error-prone.
+
+**4. Create backups before destructive operations** — You will need them.
+
+**5. Test rollback procedures** — Know exactly how to rollback when things go wrong.
+
+**6. Log everything** — Timestamps, what was attempted, why it failed, what was undone.
+
+**7. Use health checks** — Verify deployment succeeded, not just that commands completed.
+
+**8. Implement circuit breakers** — Stop the deployment if checks fail, don't push forward blindly.
+
+**9. Run smoke tests post-deployment** — Catch problems before users do.
+
+**10. Document your deployment process** — Future you (or on-call) will thank you.
+
+Deployment scripts are critical infrastructure code. Invest in getting them right, and your deployments will be smooth and reliable.
