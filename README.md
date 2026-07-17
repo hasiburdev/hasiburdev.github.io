@@ -1,47 +1,43 @@
-# hasiburdev.github.io
+# Astro Starter Kit: Minimal
 
-This is a Next.js application generated with
-[Create Fumadocs](https://github.com/fuma-nama/fumadocs).
-
-It is a Next.js app with [Static Export](https://nextjs.org/docs/app/guides/static-exports) configured.
-
-Run development server:
-
-```bash
-npm run dev
-# or
-pnpm dev
-# or
-yarn dev
+```sh
+pnpm create astro@latest -- --template minimal
 ```
 
-Open http://localhost:3000 with your browser to see the result.
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
-## Explore
+## 🚀 Project Structure
 
-In the project, you can see:
+Inside of your Astro project, you'll see the following folders and files:
 
-- `lib/source.ts`: Code for content source adapter, [`loader()`](https://fumadocs.dev/docs/headless/source-api) provides the interface to access your content.
-- `lib/layout.shared.tsx`: Shared options for layouts, optional but preferred to keep.
+```text
+/
+├── public/
+├── src/
+│   └── pages/
+│       └── index.astro
+└── package.json
+```
 
-| Route                     | Description                                            |
-| ------------------------- | ------------------------------------------------------ |
-| `app/(home)`              | The route group for your landing page and other pages. |
-| `app/docs`                | The documentation layout and pages.                    |
-| `app/api/search/route.ts` | The Route Handler for search.                          |
+Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
 
-### Fumadocs MDX
+There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
 
-A `source.config.ts` config file has been included, you can customise different options like frontmatter schema.
+Any static assets, like images, can be placed in the `public/` directory.
 
-Read the [Introduction](https://fumadocs.dev/docs/mdx) for further details.
+## 🧞 Commands
 
-## Learn More
+All commands are run from the root of the project, from a terminal:
 
-To learn more about Next.js and Fumadocs, take a look at the following
-resources:
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `pnpm install`             | Installs dependencies                            |
+| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
+| `pnpm build`           | Build your production site to `./dist/`          |
+| `pnpm preview`         | Preview your build locally, before deploying     |
+| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `pnpm astro -- --help` | Get help using the Astro CLI                     |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js
-  features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [Fumadocs](https://fumadocs.dev) - learn about Fumadocs
+## 👀 Want to learn more?
+
+Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
