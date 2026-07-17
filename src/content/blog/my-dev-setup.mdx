@@ -1,0 +1,56 @@
+---
+title: 'My Development Setup for 2026'
+date: 2026-06-20
+description: 'Tools, terminal, and workflow I use daily as a software developer.'
+tags: ['tools', 'productivity', 'setup']
+---
+
+## Terminal
+
+I use **Alacritty** as my terminal emulator with a custom configuration that matches my B&W aesthetic.
+
+## Editor
+
+**Neovim** is my editor of choice. Here's my key configuration:
+
+```lua
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
+vim.opt.termguicolors = true
+```
+
+## Shell
+
+I use **zsh** with **starship** prompt for a clean, fast shell experience.
+
+```bash
+# ~/.config/starship.toml
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+
+[directory]
+truncation_length = 3
+```
+
+## Git Workflow
+
+My git workflow is simple:
+
+```bash
+# Feature branch
+git checkout -b feature/my-feature
+
+# Commit with conventional commits
+git commit -m "feat: add new feature"
+
+# Push and create PR
+git push -u origin feature/my-feature
+```
+
+## Conclusion
+
+Your setup should work for you. Don't chase the latest tools — find what makes you productive and stick with it.

@@ -1,0 +1,23 @@
+{
+  "color": {
+    "bg-primary": { "$value": "{color.white.50}", "$type": "color" },
+    "bg-secondary": { "$value": "{color.white.100}", "$type": "color" },
+    "bg-tertiary": { "$value": "{color.white.200}", "$type": "color" },
+    "fg-primary": { "$value": "{color.black.900}", "$type": "color" },
+    "fg-secondary": { "$value": "{color.gray.500}", "$type": "color" },
+    "fg-muted": { "$value": "{color.gray.500}", "$type": "color" },
+    "accent": { "$value": "{color.green.600}", "$type": "color" },
+    "accent-hover": { "$value": "{color.green.700}", "$type": "color" },
+    "border": { "$value": "{color.white.200}", "$type": "color" },
+    "code-bg": { "$value": "{color.white.100}", "$type": "color" }
+  },
+  "component": {
+    "card-bg": { "$value": "{color.white.100}", "$type": "color" },
+    "card-border": { "$value": "{color.white.200}", "$type": "color" },
+    "badge-bg": { "$value": "{color.white.200}", "$type": "color" },
+    "badge-fg": { "$value": "{color.green.600}", "$type": "color" },
+    "button-bg": { "$value": "{color.green.600}", "$type": "color" },
+    "button-fg": { "$value": "{color.white.50}", "$type": "color" },
+    "button-hover-bg": { "$value": "{color.green.700}", "$type": "color" }
+  }
+}

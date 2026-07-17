@@ -1,0 +1,26 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'solid' | 'outline';
+  class?: string;
+}
+
+const { href, variant = 'solid', class: className = '' } = Astro.props;
+
+const baseStyles = 'inline-flex items-center justify-center px-lg py-sm text-sm font-medium rounded-md transition-all duration-fast';
+
+const variants = {
+  solid: 'bg-button-bg text-button-fg hover:bg-button-hover-bg',
+  outline: 'border border-border text-fg hover:text-accent hover:border-accent',
+};
+
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag
+  href={href}
+  class:list={[baseStyles, variants[variant], className]}
+  {...href ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+>
+  <slot />
+</Tag>

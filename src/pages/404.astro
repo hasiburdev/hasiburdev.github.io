@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404 — Page Not Found">
+  <div class="flex min-h-[calc(100vh-var(--layout-nav-height)-6rem)] flex-col items-center justify-center px-md text-center">
+    <div class="flex flex-col items-center gap-xl">
+      <h1 class="text-fg text-6xl font-bold">404</h1>
+      <p class="text-fg-secondary text-lg">Page not found</p>
+      <p class="text-fg-muted text-sm">
+        &gt; ls: no such file or directory<span class="text-accent animate-pulse">_</span>
+      </p>
+      <a
+        href="/"
+        class="mt-lg inline-flex items-center justify-center rounded-md bg-button-bg px-lg py-sm text-sm font-medium text-button-fg transition-colors hover:bg-button-hover-bg"
+      >
+        Go home
+      </a>
+    </div>
+  </div>
+</BaseLayout>

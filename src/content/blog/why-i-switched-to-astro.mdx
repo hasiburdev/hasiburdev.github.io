@@ -1,0 +1,46 @@
+---
+title: 'Why I Switched to Astro'
+date: 2026-05-01
+description: 'Moving from Next.js to Astro and why it was the right choice for content-heavy sites.'
+tags: ['astro', 'webdev', 'opinion']
+---
+
+## The Problem
+
+I was building a portfolio site with Next.js, but found myself fighting the framework more than using it. The React overhead was unnecessary for a mostly static site.
+
+## Why Astro?
+
+Astro offers:
+
+- **Zero JS by default** — no unnecessary bundle bloat
+- **Islands architecture** — add interactivity only where needed
+- **Content collections** — first-class Markdown support
+- **Fast builds** — significantly faster than Next.js for static sites
+
+## Migration
+
+The migration was straightforward:
+
+```bash
+# Create new Astro project
+pnpm create astro@latest
+
+# Move content
+mv ../old-site/content ./src/content
+
+# Update pages
+# Each page becomes a simple .astro file
+```
+
+## Results
+
+| Metric | Next.js | Astro |
+|--------|---------|-------|
+| Build time | 12s | 2s |
+| Bundle size | 85kb | 0kb |
+| Lighthouse | 92 | 100 |
+
+## Conclusion
+
+For content-heavy sites, Astro is the clear winner. Save React for when you actually need it.

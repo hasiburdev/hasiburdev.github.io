@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionTitle from '../components/ui/SectionTitle.astro';
+---
+
+<BaseLayout title="Contact — Hasibur Rahman">
+  <div class="mx-auto max-w-content-width px-md py-3xl">
+    <div class="flex flex-col gap-xl">
+      <SectionTitle title="contact" />
+
+      <div class="flex flex-col gap-md">
+        <p class="text-fg-secondary max-w-xl text-lg">
+          Have a question, want to collaborate, or just want to say hello?
+          Feel free to reach out.
+        </p>
+
+        <div class="mt-lg">
+          <a
+            href="mailto:hello@example.com"
+            class="text-accent text-xl font-medium transition-colors hover:text-accent-hover"
+          >
+            hello@example.com
+          </a>
+        </div>
+
+        <p class="text-fg-muted mt-md text-sm">
+          I'll get back to you as soon as possible.
+        </p>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

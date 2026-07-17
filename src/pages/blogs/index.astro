@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionTitle from '../../components/ui/SectionTitle.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<BaseLayout title="Blogs — Hasibur Rahman">
+  <div class="mx-auto max-w-content-width px-md py-3xl">
+    <div class="flex flex-col gap-2xl">
+      <SectionTitle title="blog" />
+
+      <div class="flex flex-col gap-xl">
+        {posts.map((post) => (
+          <article class="group border-b border-border pb-xl last:border-b-0">
+            <a href={`/blogs/${post.id}`} class="flex flex-col gap-sm">
+              <time class="text-fg-muted text-sm">
+                {post.data.date.toISOString().split('T')[0]}
+              </time>
+              <h2 class="text-fg text-xl font-bold transition-colors group-hover:text-accent">
+                {post.data.title}
+              </h2>
+              <p class="text-fg-secondary text-sm">
+                {post.data.description}
+              </p>
+              {post.data.tags && (
+                <div class="flex flex-wrap gap-sm mt-sm">
+                  {post.data.tags.map((tag) => (
+                    <span class="text-fg-muted text-xs">#{tag}</span>
+                  ))}
+                </div>
+              )}
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>

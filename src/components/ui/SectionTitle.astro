@@ -1,0 +1,12 @@
+---
+interface Props {
+  title: string;
+  class?: string;
+}
+
+const { title, class: className = '' } = Astro.props;
+---
+
+<h2 class:list={['text-accent font-bold text-2xl', className]}>
+  <span class="text-fg-muted">&gt;</span> {title}<span class="text-fg-muted animate-pulse">_</span>
+</h2>

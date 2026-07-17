@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionTitle from '../components/ui/SectionTitle.astro';
+import SkillBadge from '../components/ui/SkillBadge.astro';
+import ExperienceTimeline from '../components/features/ExperienceTimeline.astro';
+
+const skills = {
+  Languages: ['JavaScript', 'TypeScript', 'Python', 'Go', 'Rust'],
+  Frameworks: ['React', 'Astro', 'Node.js', 'Next.js', 'Tailwind CSS'],
+  Tools: ['Git', 'Docker', 'Linux', 'Neovim', 'PostgreSQL', 'Redis'],
+};
+---
+
+<BaseLayout title="About — Hasibur Rahman">
+  <div class="mx-auto max-w-content-width px-md py-3xl">
+    <div class="flex flex-col gap-3xl">
+      <!-- Bio Section -->
+      <section class="flex flex-col gap-xl md:flex-row md:items-start md:gap-2xl">
+        <div class="h-48 w-48 flex-shrink-0 overflow-hidden rounded-lg border border-border bg-bg-secondary">
+          <div class="flex h-full w-full items-center justify-center text-5xl text-fg-muted">
+            HR
+          </div>
+        </div>
+        <div class="flex flex-col gap-md">
+          <SectionTitle title="about" />
+          <h1 class="text-fg text-3xl font-bold">Hasibur Rahman</h1>
+          <p class="text-fg-secondary text-lg">Software Developer</p>
+          <p class="text-fg-secondary max-w-xl leading-relaxed">
+            I'm a software developer passionate about building clean, efficient, and user-friendly
+            applications. I enjoy working with modern technologies and solving complex problems
+            through elegant code. When I'm not coding, you can find me exploring new tools,
+            contributing to open source, or writing about tech.
+          </p>
+        </div>
+      </section>
+
+      <!-- Skills Section -->
+      <section class="flex flex-col gap-lg">
+        <SectionTitle title="tech stack" />
+        <div class="flex flex-col gap-lg">
+          {Object.entries(skills).map(([category, items]) => (
+            <div class="flex flex-col gap-sm">
+              <h3 class="text-fg-muted text-sm font-medium uppercase tracking-wider">{category}</h3>
+              <div class="flex flex-wrap gap-sm">
+                {items.map((skill) => (
+                  <SkillBadge name={skill} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Experience Section -->
+      <section class="flex flex-col gap-lg">
+        <SectionTitle title="experience" />
+        <ExperienceTimeline />
+      </section>
+    </div>
+  </div>
+</BaseLayout>

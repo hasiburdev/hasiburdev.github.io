@@ -1,17 +1,31 @@
 ---
-
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ExternalLink from '../components/ui/ExternalLink.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout>
+  <section class="flex min-h-[calc(100vh-var(--layout-nav-height))] flex-col items-center justify-center px-md">
+    <div class="flex flex-col items-center gap-xl text-center">
+      <div class="h-32 w-32 overflow-hidden rounded-full border-2 border-border bg-bg-secondary">
+        <div class="flex h-full w-full items-center justify-center text-4xl text-fg-muted">
+          HR
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-sm">
+        <h1 class="text-fg text-3xl font-bold md:text-4xl">Hasibur Rahman</h1>
+        <p class="text-fg-secondary text-lg">Software Developer</p>
+      </div>
+
+      <p class="text-fg-muted max-w-md text-base">
+        &gt; Building things with code<span class="text-accent animate-pulse">_</span>
+      </p>
+
+      <div class="flex items-center gap-lg">
+        <ExternalLink href="https://github.com/" label="GitHub" />
+        <ExternalLink href="https://linkedin.com/" label="LinkedIn" />
+        <ExternalLink href="https://facebook.com/" label="Facebook" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

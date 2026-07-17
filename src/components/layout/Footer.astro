@@ -1,0 +1,31 @@
+---
+const year = new Date().getFullYear();
+
+const socialLinks = [
+  { href: 'https://github.com/', label: 'GitHub' },
+  { href: 'https://linkedin.com/', label: 'LinkedIn' },
+  { href: 'https://facebook.com/', label: 'Facebook' },
+];
+---
+
+<footer class="border-t border-border py-lg">
+  <div class="mx-auto flex max-w-layout-width flex-col items-center gap-md px-md sm:flex-row sm:justify-between">
+    <p class="text-fg-muted text-sm">
+      &copy; {year} Hasibur Rahman
+    </p>
+    <ul class="flex items-center gap-lg">
+      {socialLinks.map(link => (
+        <li>
+          <a
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-fg-secondary text-sm transition-colors hover:text-accent"
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</footer>

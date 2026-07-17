@@ -1,0 +1,32 @@
+---
+import ThemeToggle from '../ui/ThemeToggle.astro';
+
+const navLinks = [
+  { href: '/about', label: 'About' },
+  { href: '/blogs', label: 'Blogs' },
+  { href: '/contact', label: 'Contact' },
+];
+---
+
+<header class="sticky top-0 z-50 border-b border-border bg-bg-primary/80 backdrop-blur-sm">
+  <nav class="mx-auto flex h-nav-height max-w-layout-width items-center justify-between px-md">
+    <a href="/" class="text-fg font-bold text-lg hover:text-accent transition-colors">
+      hasibur<span class="text-accent">dev</span>
+    </a>
+    <div class="flex items-center gap-lg">
+      <ul class="hidden items-center gap-lg md:flex">
+        {navLinks.map(link => (
+          <li>
+            <a
+              href={link.href}
+              class="text-fg-secondary text-sm transition-colors hover:text-accent"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <ThemeToggle />
+    </div>
+  </nav>
+</header>

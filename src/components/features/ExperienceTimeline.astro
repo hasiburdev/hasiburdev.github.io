@@ -1,0 +1,33 @@
+---
+const experiences = [
+  {
+    date: '2024 — Present',
+    role: 'Senior Software Developer',
+    company: 'Tech Corp',
+    description: 'Leading development of scalable web applications and mentoring junior developers.',
+  },
+  {
+    date: '2022 — 2024',
+    role: 'Software Developer',
+    company: 'StartupXYZ',
+    description: 'Built and maintained full-stack features using React, Node.js, and PostgreSQL.',
+  },
+  {
+    date: '2020 — 2022',
+    role: 'Junior Developer',
+    company: 'WebAgency',
+    description: 'Developed responsive websites and learned modern web development practices.',
+  },
+];
+---
+
+<div class="flex flex-col gap-xl">
+  {experiences.map((exp) => (
+    <div class="border-l-2 border-border pl-lg">
+      <p class="text-fg-muted text-sm">{exp.date}</p>
+      <h3 class="text-fg mt-xs text-lg font-bold">{exp.role}</h3>
+      <p class="text-accent text-sm">{exp.company}</p>
+      <p class="text-fg-secondary mt-sm text-sm">{exp.description}</p>
+    </div>
+  ))}
+</div>

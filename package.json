@@ -6,12 +6,19 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
+    "tokens:build": "node src/tokens/config.js",
+    "dev": "pnpm tokens:build && astro dev --background",
+    "build": "pnpm tokens:build && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/mdx": "^7.0.3",
     "astro": "^7.1.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "style-dictionary": "^5.5.0",
+    "tailwindcss": "^4.3.3"
   }
 }

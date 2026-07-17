@@ -1,0 +1,18 @@
+---
+interface Props {
+  href: string;
+  label: string;
+  class?: string;
+}
+
+const { href, label, class: className = '' } = Astro.props;
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  class:list={['text-accent transition-colors hover:text-accent-hover', className]}
+>
+  {label}
+</a>

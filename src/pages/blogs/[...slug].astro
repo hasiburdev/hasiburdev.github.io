@@ -1,0 +1,144 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<BaseLayout title={`${post.data.title} — Hasibur Rahman`}>
+  <article class="mx-auto max-w-content-width px-md py-3xl">
+    <div class="flex flex-col gap-xl">
+      <a href="/blogs" class="text-fg-muted text-sm transition-colors hover:text-accent">
+        &larr; Back to blog
+      </a>
+
+      <header class="flex flex-col gap-sm">
+        <time class="text-fg-muted text-sm">
+          {post.data.date.toISOString().split('T')[0]}
+        </time>
+        <h1 class="text-fg text-3xl font-bold">{post.data.title}</h1>
+        <p class="text-fg-secondary text-lg">{post.data.description}</p>
+        {post.data.tags && (
+          <div class="flex flex-wrap gap-sm mt-sm">
+            {post.data.tags.map((tag) => (
+              <span class="text-fg-muted text-xs">#{tag}</span>
+            ))}
+          </div>
+        )}
+      </header>
+
+      <div class="prose prose-invert max-w-none">
+        <Content />
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style is:global>
+  .prose {
+    color: var(--color-fg-primary);
+    line-height: 1.8;
+  }
+
+  .prose h1, .prose h2, .prose h3 {
+    color: var(--color-fg-primary);
+    font-weight: bold;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .prose h1 { font-size: var(--font-size-2xl); }
+  .prose h2 { font-size: var(--font-size-xl); }
+  .prose h3 { font-size: var(--font-size-lg); }
+
+  .prose p {
+    margin-bottom: 1.5rem;
+    color: var(--color-fg-secondary);
+  }
+
+  .prose a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .prose a:hover {
+    color: var(--color-accent-hover);
+  }
+
+  .prose code {
+    background: var(--color-code-bg);
+    padding: 0.2em 0.4em;
+    border-radius: var(--radius-sm);
+    font-size: 0.9em;
+  }
+
+  .prose pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+  }
+
+  .prose pre code {
+    background: none;
+    padding: 0;
+    font-size: 0.875rem;
+  }
+
+  .prose ul, .prose ol {
+    margin: 1.5rem 0;
+    padding-left: 1.5rem;
+    color: var(--color-fg-secondary);
+  }
+
+  .prose li {
+    margin-bottom: 0.5rem;
+  }
+
+  .prose blockquote {
+    border-left: 3px solid var(--color-accent);
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    color: var(--color-fg-muted);
+    font-style: italic;
+  }
+
+  .prose table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+  }
+
+  .prose th, .prose td {
+    border: 1px solid var(--color-border);
+    padding: 0.75rem 1rem;
+    text-align: left;
+  }
+
+  .prose th {
+    background: var(--color-bg-secondary);
+    font-weight: bold;
+    color: var(--color-fg-primary);
+  }
+
+  .prose td {
+    color: var(--color-fg-secondary);
+  }
+
+  .prose strong {
+    color: var(--color-fg-primary);
+    font-weight: bold;
+  }
+</style>
